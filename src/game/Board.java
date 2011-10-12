@@ -117,6 +117,9 @@ public class Board implements Cloneable{
 		}
 	}
 	
+	
+	HOLAA
+	
 	public Board clone(){
 		Board cloned = new Board();
 		cloned.field=this.field.clone();
