@@ -8,6 +8,7 @@ public class Board implements Cloneable {
 	public static final int SIZE = 8;
 
 	private Tile[][] field = new Tile[SIZE][SIZE];
+	private boolean pass;
 
 	public Board() {
 		for (int row = 0; row < SIZE; row++) {
@@ -109,6 +110,17 @@ public class Board implements Cloneable {
 			return -1;
 		}
 		return 0;
+	}
+
+	public void checkEndGame(Tile tile) {
+		if (getPossiblePositions(tile).isEmpty()) {
+			if (pass) {
+				// *TODO endgame
+			} else {
+				pass = true;
+				// *TODO pass
+			}
+		}
 	}
 
 	public Board clone() {
