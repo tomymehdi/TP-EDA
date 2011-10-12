@@ -133,5 +133,9 @@ public class Board implements Cloneable {
 		cloned.field = this.field.clone();
 		return cloned;
 	}
+	
+	public void put(int row,int col,Tile tile){
+		field[row][col] = tile;
+	}
 
 }
