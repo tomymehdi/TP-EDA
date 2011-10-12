@@ -25,12 +25,12 @@ public class Board implements Cloneable {
 			}
 		}
 	}
-	
-	public Tile getTile(int row, int col){
+
+	public Tile getTile(int row, int col) {
 		return field[row][col];
 	}
-	
-	public Board putTile(int row, int col, Tile tile){
+
+	public Board putTile(int row, int col, Tile tile) {
 
 		Board changed = this.clone();
 		int count = 0;
@@ -133,9 +133,20 @@ public class Board implements Cloneable {
 		cloned.field = this.field.clone();
 		return cloned;
 	}
-	
-	public void put(int row,int col,Tile tile){
+
+	public void put(int row, int col, Tile tile) {
 		field[row][col] = tile;
 	}
 
+	@Override
+	public String toString() {
+		String s = "";
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				s += field[i][j];
+			}
+			s+="\n";
+		}
+		return s;
+	}
 }
