@@ -4,10 +4,10 @@ import java.io.File;
 
 public class Parser {
 	
-	File file;
+	private File file;
 	
 	public Parser(File file) {
 		this.file = file;
 	}
-
+	
 }
