@@ -4,7 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Board implements Cloneable{
-	public final int SIZE=8;
+	
+	public static final int SIZE=8;
+	
 	private Tile [][] field = new Tile[SIZE][SIZE];
 	
 	public Board(){
