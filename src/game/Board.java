@@ -25,8 +25,13 @@ public class Board implements Cloneable {
 			}
 		}
 	}
+	
+	public Tile getTile(int row, int col){
+		return field[row][col];
+	}
+	
+	public Board putTile(int row, int col, Tile tile){
 
-	public Board putTile(int row, int col, Tile tile) {
 		Board changed = this.clone();
 		int count = 0;
 		if (changed.field[row][col] != Tile.EMPTY) {
