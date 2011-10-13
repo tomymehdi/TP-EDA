@@ -26,7 +26,7 @@ public class Parser {
 
 	public Board parseFile() throws Exception {
 		int countRows = 0;
-		Board board = new Board();
+		Board board = new Board(1);
 		String line;
 		char[] charLine;
 		BufferedReader inputFile = new BufferedReader(new FileReader(file));
@@ -51,6 +51,9 @@ public class Parser {
 				}
 			}
 			countRows++;
+		}
+		if(countRows!=8){
+			throw new Exception();
 		}
 
 		return board;

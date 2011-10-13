@@ -25,6 +25,10 @@ public class Board implements Cloneable {
 			}
 		}
 	}
+	
+	public Board(int a){
+		
+	}
 
 	public Tile getTile(int row, int col) {
 		return field[row][col];
