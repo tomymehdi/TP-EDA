@@ -42,11 +42,11 @@ public class BoardPanel extends JPanel {
 				Tile tile=board.getTile(row,col);
 				if(tile==Tile.PLAYER1){
 					g.setColor(Color.BLACK);
-					g.fillOval(row*TILE_SIZE, col*TILE_SIZE, TILE_SIZE, TILE_SIZE);
+					g.fillOval(col*TILE_SIZE, row*TILE_SIZE, TILE_SIZE, TILE_SIZE);
 				}
 				else if(tile==Tile.PLAYER2){
 					g.setColor(Color.WHITE);
-					g.fillOval(row*TILE_SIZE, col*TILE_SIZE, TILE_SIZE, TILE_SIZE);
+					g.fillOval(col*TILE_SIZE, row*TILE_SIZE, TILE_SIZE, TILE_SIZE);
 				}
 			}
 		}

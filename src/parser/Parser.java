@@ -20,7 +20,7 @@ public class Parser {
 		try {
 			this.inputFile = new BufferedReader(new FileReader(file));
 		} catch (Exception e) {
-			// TODO
+			System.out.println("error");
 		}
 	}
 
@@ -59,12 +59,11 @@ public class Parser {
 		return board;
 	}
 
-	public static void main(String[] args) throws Exception {
-		File file = new File("./src/parser/lala.txt");
-		Parser test = new Parser(file);
-		Board boardd = test.parseFile();
-		System.out.println(boardd);
-
-	}
+//	public static void main(String[] args) throws Exception {
+//		File file = new File("./src/parser/lala.txt");
+//		Parser test = new Parser(file);
+//		Board boardd = test.parseFile();
+//		System.out.println(boardd);
+//	}
 
 }
