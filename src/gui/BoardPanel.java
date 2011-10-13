@@ -1,7 +1,9 @@
 package gui;
 
 import game.Board;
+import game.Tile;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
@@ -25,6 +27,7 @@ public class BoardPanel extends JPanel {
 	}
 	
 	private void drawGrid(Graphics g){
+		g.setColor(Color.GRAY);
 		for(int col=0; col<Board.SIZE; col++){
 			g.drawLine(col*TILE_SIZE, 0, col*TILE_SIZE, Board.SIZE*TILE_SIZE);
 		}
@@ -36,7 +39,15 @@ public class BoardPanel extends JPanel {
 	private void drawTiles(Graphics g){
 		for(int row=0; row<Board.SIZE; row++){
 			for(int col=0; col<Board.SIZE; col++){
-				if(board.getTile(row,col))
+				Tile tile=board.getTile(row,col);
+				if(tile==Tile.PLAYER1){
+					g.setColor(Color.BLACK);
+					g.fillOval(row*TILE_SIZE, col*TILE_SIZE, TILE_SIZE, TILE_SIZE);
+				}
+				else if(tile==Tile.PLAYER2){
+					g.setColor(Color.WHITE);
+					g.fillOval(row*TILE_SIZE, col*TILE_SIZE, TILE_SIZE, TILE_SIZE);
+				}
 			}
 		}
 	}
