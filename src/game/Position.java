@@ -21,4 +21,13 @@ public class Position {
 	public String toString() {
 		return "("+row+", "+col+")";
 	}
+
+	public void setCol(int col) {
+		this.col = col;
+	}
+	
+	public void setRow(int row) {
+		this.row = row;
+	}
+
 }
