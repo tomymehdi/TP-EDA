@@ -168,7 +168,7 @@ public class Board implements Cloneable {
 	
 	public Board computerTurn(){
 		MiniMaxTree tree=new MiniMaxTree(4, this, false);
-		Position pos=tree.getNextMove();
+		Position pos=tree.getNextMove(false);
 		if(pos == null){
 			return null;
 		}

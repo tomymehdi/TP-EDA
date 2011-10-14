@@ -1,8 +1,7 @@
 package AI;
 
-import game.Board;
-import game.Position;
-import game.Tile;
+import game.*;
+
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,15 +9,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 public abstract class Node{
-	
+
 	protected List<Node> childs=new LinkedList<Node>();
 	Board board;
 	Position pos;
 	int value;
 	boolean pruned;
-	
-	public abstract void setChilds();
-	
+
 	public int getHeuristicalValue(){
 		int val=0;
 		for(Tile[] row: board.getField()){
@@ -29,7 +26,7 @@ public abstract class Node{
 		value=val;
 		return val;
 	}
-	
+
 	private int getHeuristicalValue(Tile tile){
 		switch(tile){
 		case PLAYER1:
@@ -40,10 +37,29 @@ public abstract class Node{
 			return 0;
 		}
 	}
-	
-	
-	public abstract Position nextMove(int maxLevel, int level, boolean prune, int rootVal);
-	public int toDOT(FileWriter fr, boolean red, boolean shape, int i) throws IOException{
+
+
+	public Position nextMove(int maxLevel, int level, boolean prune, int rootVal){
+		if(maxLevel==level){
+			getHeuristicalValue();
+			return pos;
+		}
+		Position nextPos=pos;
+		setChilds();
+		for(Node child:childs){
+			child.nextMove(maxLevel, level+1, prune, value);
+			if(prune && pruneBranch(rootVal)){
+				child.pruned=true;
+				return null;
+			}
+			if(child.chooseMove(value)){
+				nextPos=child.pos;
+				value=child.value;
+			}
+		}
+		return nextPos;
+	}
+	public int toDOT(FileWriter fr, boolean red, int i) throws IOException{
 		String s, p;
 		int me = i,aux;
 		if(red){
@@ -53,7 +69,7 @@ public abstract class Node{
 		}else{
 			s="";
 		}
-		if(shape){
+		if(this instanceof MaxNode){//*TODO turbioo
 			p="shape=box, ";
 		}else{
 			p="";
@@ -67,9 +83,44 @@ public abstract class Node{
 				flag=false;
 			}
 			aux=i+1;
-			i=son.toDOT(fr, flag, son instanceof MaxNode, ++i); //*TODO turbioo
+			i=son.toDOT(fr, flag, ++i); 
 			fr.append(me +" -> " + aux +";\n");
 		}
 		return i;
 	}
+
+	public void setChilds(){
+		int myRow, myCol;
+		Tile tile;
+		boolean IAmMini = this instanceof MiniNode;
+		if(IAmMini){
+			tile=Tile.PLAYER2;
+		}else{
+			tile=Tile.PLAYER1;
+		}
+		for (int row = 0; row < Board.SIZE; row++) {
+			for (int col = 0; col < Board.SIZE; col++) {
+				if (board.getTile(row, col) == tile) {
+					for (Direction dir : Direction.values()) {
+						myRow = row + dir.getRow();
+						myCol = col + dir.getCol();
+						if (!(myRow < 0 || myCol < 0 || myRow >= Board.SIZE || myCol >= Board.SIZE)
+								&& board.getTile(myRow, myCol) == Tile.EMPTY) {
+							if (board.possibleChange(myRow, myCol, tile.getOpposite(), dir.getOpposite())) {
+								if(IAmMini){
+									childs.add(new MaxNode(board.putTile(myRow, myCol, Tile.PLAYER1), new Position(myRow, myCol)));									
+								}else{
+									childs.add(new MiniNode(board.putTile(myRow, myCol, Tile.PLAYER2), new Position(myRow, myCol)));									
+								}
+							}
+
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	public abstract boolean chooseMove(int val);
+	public abstract boolean pruneBranch(int val);
 }
