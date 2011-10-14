@@ -28,9 +28,15 @@ public class Window extends JFrame {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER && !b.isPlayerTurn()) {
 					Board auxBoard = b.computerTurn();
 					if (auxBoard == null) {
-						JOptionPane.showMessageDialog(null,
-								"No posible moves", "Error",
-								JOptionPane.ERROR_MESSAGE);
+						if (!Window.this.boardPanel.getBoard().playerHasMoves()) {
+							JOptionPane.showMessageDialog(null, "GAME END",
+									"Error", JOptionPane.ERROR_MESSAGE);
+						} else {
+							Window.this.boardPanel.getBoard().setPlayerTurn(true);
+							JOptionPane.showMessageDialog(null,
+									"No posible moves", "Error",
+									JOptionPane.ERROR_MESSAGE);
+						}
 					} else {
 						Window.this.boardPanel.setBoard(auxBoard);
 						Window.this.repaint();
