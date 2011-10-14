@@ -19,13 +19,20 @@ public class BoardPanel extends JPanel {
 	public BoardPanel(Board board){
 		this.board=board;
 		setPreferredSize(new Dimension(Board.SIZE*TILE_SIZE,Board.SIZE*TILE_SIZE));
+		setBackground(Color.WHITE);
 		addMouseListener(new MouseAdapter(){
 			@Override
 			public void mouseClicked(MouseEvent m) {
-				int row=m.getY()/TILE_SIZE;
-				int col=m.getX()/TILE_SIZE;
-				BoardPanel.this.board.putTile(row, col, Tile.PLAYER1);
-				BoardPanel.this.repaint();
+				if(BoardPanel.this.board.isPlayerTurn()){
+					int row=m.getY()/TILE_SIZE;
+					int col=m.getX()/TILE_SIZE;
+					BoardPanel.this.board=BoardPanel.this.board.putTile(row, col, Tile.PLAYER1);
+					BoardPanel.this.board.setPlayerTurn(false);
+					BoardPanel.this.repaint();	
+				}
+				else{
+					System.out.println("Not player turn");
+				}
 			}			
 		});
 	}
@@ -38,7 +45,7 @@ public class BoardPanel extends JPanel {
 	}
 	
 	private void drawGrid(Graphics g){
-		g.setColor(Color.GRAY);
+		g.setColor(Color.LIGHT_GRAY);
 		for(int col=0; col<Board.SIZE; col++){
 			g.drawLine(col*TILE_SIZE, 0, col*TILE_SIZE, Board.SIZE*TILE_SIZE);
 		}
@@ -56,7 +63,7 @@ public class BoardPanel extends JPanel {
 					g.fillOval(col*TILE_SIZE, row*TILE_SIZE, TILE_SIZE, TILE_SIZE);
 				}
 				else if(tile==Tile.PLAYER2){
-					g.setColor(Color.WHITE);
+					g.setColor(Color.LIGHT_GRAY);
 					g.fillOval(col*TILE_SIZE, row*TILE_SIZE, TILE_SIZE, TILE_SIZE);
 				}
 			}
