@@ -6,6 +6,8 @@ import game.Tile;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -27,11 +29,7 @@ public class BoardPanel extends JPanel {
 					int row=m.getY()/TILE_SIZE;
 					int col=m.getX()/TILE_SIZE;
 					BoardPanel.this.board=BoardPanel.this.board.putTile(row, col, Tile.PLAYER1);
-					BoardPanel.this.board.setPlayerTurn(false);
 					BoardPanel.this.repaint();	
-				}
-				else{
-					System.out.println("Not player turn");
 				}
 			}			
 		});
@@ -68,5 +66,13 @@ public class BoardPanel extends JPanel {
 				}
 			}
 		}
+	}
+	
+	public void setBoard(Board board) {
+		this.board = board;
+	}
+	
+	public Board getBoard() {
+		return board;
 	}
 }

@@ -3,6 +3,8 @@ package game;
 import java.util.HashSet;
 import java.util.Set;
 
+import AI.MiniMaxTree;
+
 public class Board implements Cloneable {
 
 	public static final Tile[][] DEFAULT_FIELD={{Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY},
@@ -19,7 +21,7 @@ public class Board implements Cloneable {
 	private boolean pass;
 
 	public Board() {
-		new Board(DEFAULT_FIELD);		
+		this(DEFAULT_FIELD);		
 	}
 	
 	public Board(Tile[][] field){
@@ -45,6 +47,7 @@ public class Board implements Cloneable {
 				}
 			}
 			if (count > 0) {
+				clone.playerTurn=!playerTurn;
 				return clone;
 			}
 		}
@@ -161,5 +164,11 @@ public class Board implements Cloneable {
 	
 	public void setPlayerTurn(boolean playerTurn) {
 		this.playerTurn = playerTurn;
+	}
+	
+	public Board computerTurn(){
+		MiniMaxTree tree=new MiniMaxTree(4, this, false);
+		Position pos=tree.getNextMove();
+		return putTile(pos.getRow(),pos.getCol(),Tile.PLAYER2);
 	}
 }
