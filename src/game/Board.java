@@ -112,8 +112,6 @@ public class Board implements Cloneable {
 		
 	}
 	
-	
-	
 	private int spread(int row, int col, Tile tile, Direction dir) {
 		Tile thisTile;
 		if ((row < 0 || row >= SIZE || col < 0 || col >= SIZE)
@@ -149,9 +147,6 @@ public class Board implements Cloneable {
 		return cloned;
 	}
 
-	public void put(int row, int col, Tile tile) {
-		field[row][col] = tile;
-	}
 
 	@Override
 	public String toString() {
