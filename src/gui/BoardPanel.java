@@ -27,6 +27,7 @@ public class BoardPanel extends JPanel {
 	}
 	
 	private void drawGrid(Graphics g){
+		g.setColor(Color.GRAY);
 		for(int col=0; col<Board.SIZE; col++){
 			g.drawLine(col*TILE_SIZE, 0, col*TILE_SIZE, Board.SIZE*TILE_SIZE);
 		}
@@ -38,11 +39,15 @@ public class BoardPanel extends JPanel {
 	private void drawTiles(Graphics g){
 		for(int row=0; row<Board.SIZE; row++){
 			for(int col=0; col<Board.SIZE; col++){
-				Color color;
-				if(board.getTile(row,col).equals(Tile.PLAYER1)){
-					color=Color.BLACK;
+				Tile tile=board.getTile(row,col);
+				if(tile==Tile.PLAYER1){
+					g.setColor(Color.BLACK);
+					g.fillOval(col*TILE_SIZE, row*TILE_SIZE, TILE_SIZE, TILE_SIZE);
 				}
-				else if
+				else if(tile==Tile.PLAYER2){
+					g.setColor(Color.WHITE);
+					g.fillOval(col*TILE_SIZE, row*TILE_SIZE, TILE_SIZE, TILE_SIZE);
+				}
 			}
 		}
 	}
