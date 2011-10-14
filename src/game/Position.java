@@ -17,6 +17,11 @@ public class Position {
 		return row;
 	}
 	
+	@Override
+	public String toString() {
+		return "("+row+", "+col+")";
+	}
+
 	public void setCol(int col) {
 		this.col = col;
 	}
@@ -24,5 +29,5 @@ public class Position {
 	public void setRow(int row) {
 		this.row = row;
 	}
-	
+
 }

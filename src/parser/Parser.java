@@ -1,6 +1,7 @@
 package parser;
 
 import game.Board;
+import game.Tile;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,7 +23,7 @@ public class Parser {
 	}
 
 	public Board parseFile() throws Exception {
-		int [][] matrix= new int[Board.SIZE][Board.SIZE];
+		Tile [][] matrix= new Tile[Board.SIZE][Board.SIZE];
 		int i=0;
 		String line;
 		char[] charLine;
@@ -35,13 +36,13 @@ public class Parser {
 			for (int j = 0; j < Board.SIZE; j++) {
 				switch (charLine[j]) {
 				case ' ':
-					matrix[i][j]=0;
+					matrix[i][j]=Tile.EMPTY;
 					break;
 				case '1':
-					matrix[i][j]=1;
+					matrix[i][j]=Tile.PLAYER1;
 					break;
 				case '2':
-					matrix[i][j]=2;
+					matrix[i][j]=Tile.PLAYER2;
 					break;
 				default:
 					throw new Exception();
@@ -54,13 +55,6 @@ public class Parser {
 		}
 		Board board=new Board(matrix);
 		return board;
-	}
-
-	public static void main(String[] args) throws Exception {
-		File file = new File("./src/parser/lala.txt");
-		Parser test = new Parser(file);
-		Board boardd = test.parseFile();
-		System.out.println(boardd);
 	}
 
 }
