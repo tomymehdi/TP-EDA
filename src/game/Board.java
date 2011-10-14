@@ -47,6 +47,7 @@ public class Board implements Cloneable {
 				}
 			}
 			if (count > 0) {
+				clone.playerTurn=!playerTurn;
 				return clone;
 			}
 		}
@@ -166,9 +167,8 @@ public class Board implements Cloneable {
 	}
 	
 	public Board computerTurn(){
-		MiniMaxTree tree=new MiniMaxTree(1, this, false);
+		MiniMaxTree tree=new MiniMaxTree(4, this, false);
 		Position pos=tree.getNextMove();
-		setPlayerTurn(true);
 		return putTile(pos.getRow(),pos.getCol(),Tile.PLAYER2);
 	}
 }

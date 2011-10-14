@@ -29,20 +29,9 @@ public class BoardPanel extends JPanel {
 					int row=m.getY()/TILE_SIZE;
 					int col=m.getX()/TILE_SIZE;
 					BoardPanel.this.board=BoardPanel.this.board.putTile(row, col, Tile.PLAYER1);
-					BoardPanel.this.board.setPlayerTurn(false);
 					BoardPanel.this.repaint();	
 				}
 			}			
-		});
-		addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				System.out.println("xd");
-				if(e.getKeyCode()==KeyEvent.VK_ENTER && !BoardPanel.this.board.isPlayerTurn()){
-					BoardPanel.this.board=BoardPanel.this.board.computerTurn();
-					BoardPanel.this.repaint();
-				}
-			}
 		});
 	}
 	
@@ -77,5 +66,13 @@ public class BoardPanel extends JPanel {
 				}
 			}
 		}
+	}
+	
+	public void setBoard(Board board) {
+		this.board = board;
+	}
+	
+	public Board getBoard() {
+		return board;
 	}
 }

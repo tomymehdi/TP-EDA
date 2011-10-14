@@ -13,13 +13,23 @@ import javax.swing.JPanel;
 import parser.Parser;
 
 public class Window extends JFrame {
-	JPanel boardPanel;
+	BoardPanel boardPanel;
 
 	public Window(Board board) {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new FlowLayout());
 		boardPanel = new BoardPanel(board);
 		add(boardPanel);
+		addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				Board b=Window.this.boardPanel.getBoard();
+				if(e.getKeyCode()==KeyEvent.VK_ENTER && !b.isPlayerTurn()){
+					Window.this.boardPanel.setBoard(b.computerTurn());
+					Window.this.repaint();
+				}
+			}
+		});
 		pack();
 		setVisible(true);
 	}
