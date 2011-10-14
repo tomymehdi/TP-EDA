@@ -87,7 +87,7 @@ public class Board implements Cloneable {
 		return set;
 	}
 	
-	private boolean possibleChange(int row, int col, Tile tile, Direction dir){
+	public boolean possibleChange(int row, int col, Tile tile, Direction dir){
 		if(field[row][col]!=Tile.EMPTY){
 			return false;
 		}
@@ -146,7 +146,10 @@ public class Board implements Cloneable {
 		cloned.field = this.field.clone();
 		return cloned;
 	}
-
+	
+	public Tile[][] getField(){
+		return field;
+	}
 
 	@Override
 	public String toString() {
