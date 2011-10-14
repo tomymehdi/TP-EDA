@@ -43,6 +43,7 @@ public abstract class Node{
 	
 	
 	public abstract Position nextMove(int maxLevel, int level, boolean prune, int rootVal);
+	
 	public int toDOT(FileWriter fr, boolean red, boolean shape, int i) throws IOException{
 		String s, p;
 		int me = i,aux;
