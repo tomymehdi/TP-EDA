@@ -194,13 +194,13 @@ public class Board implements Cloneable {
 		int myRow, myCol, posibleMoves = 0;
 		for (int row = 0; row < Board.SIZE; row++) {
 			for (int col = 0; col < Board.SIZE; col++) {
-				if (getTile(row, col) == Tile.PLAYER1) {
+				if (getTile(row, col) == Tile.PLAYER2) {
 					for (Direction dir : Direction.values()) {
 						myRow = row + dir.getRow();
 						myCol = col + dir.getCol();
 						if (!(myRow < 0 || myCol < 0 || myRow >= Board.SIZE || myCol >= Board.SIZE)
 								&& getTile(myRow, myCol) == Tile.EMPTY) {
-							if (possibleChange(myRow, myCol, Tile.PLAYER2,
+							if (possibleChange(myRow, myCol, Tile.PLAYER1,
 									dir.getOpposite())) {
 								posibleMoves++;
 							}
@@ -210,6 +210,6 @@ public class Board implements Cloneable {
 				}
 			}
 		}
-		return posibleMoves > 0;
+		return posibleMoves >= 1;
 	}
 }

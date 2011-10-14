@@ -31,10 +31,13 @@ public class BoardPanel extends JPanel {
 					if (!BoardPanel.this.board.playerHasMoves()) {
 						Board auxBoard = BoardPanel.this.board.computerTurn();
 						if (auxBoard == null) {
-							JOptionPane.showMessageDialog(null,
-									"GAME END", "Error",
-									JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "GAME END",
+									"Error", JOptionPane.ERROR_MESSAGE);
 						} else {
+							BoardPanel.this.board.setPlayerTurn(false);
+							JOptionPane.showMessageDialog(null,
+									"No posible moves", "Error",
+									JOptionPane.ERROR_MESSAGE);
 							setBoard(auxBoard);
 							repaint();
 						}
