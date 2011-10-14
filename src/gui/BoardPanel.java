@@ -6,6 +6,8 @@ import game.Tile;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 
@@ -17,6 +19,15 @@ public class BoardPanel extends JPanel {
 	public BoardPanel(Board board){
 		this.board=board;
 		setPreferredSize(new Dimension(Board.SIZE*TILE_SIZE,Board.SIZE*TILE_SIZE));
+		addMouseListener(new MouseAdapter(){
+			@Override
+			public void mouseClicked(MouseEvent m) {
+				int row=m.getY()/TILE_SIZE;
+				int col=m.getX()/TILE_SIZE;
+				BoardPanel.this.board.putTile(row, col, Tile.PLAYER1);
+				BoardPanel.this.repaint();
+			}			
+		});
 	}
 	
 	@Override

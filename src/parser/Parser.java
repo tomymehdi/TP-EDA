@@ -1,17 +1,14 @@
 package parser;
 
 import game.Board;
-import game.Tile;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
-import sun.applet.Main;
 
 public class Parser {
 
-	private final int LENGTH = 8;
 	private File file;
 	private BufferedReader inputFile;
 
@@ -25,45 +22,45 @@ public class Parser {
 	}
 
 	public Board parseFile() throws Exception {
-		int countRows = 0;
-		Board board = new Board(1);
+		int [][] matrix= new int[Board.SIZE][Board.SIZE];
+		int i=0;
 		String line;
 		char[] charLine;
 		BufferedReader inputFile = new BufferedReader(new FileReader(file));
 		while ((line = inputFile.readLine()) != null) {
-			if (line.length() != 8 || countRows > 8) {
+			if (line.length() != Board.SIZE || i > Board.SIZE) {
 				throw new Exception();
 			}
 			charLine = line.toCharArray();
-			for (int i = 0; i < 8; i++) {
-				switch (charLine[i]) {
+			for (int j = 0; j < Board.SIZE; j++) {
+				switch (charLine[j]) {
 				case ' ':
-					board.put(countRows, i, Tile.EMPTY);
+					matrix[i][j]=0;
 					break;
 				case '1':
-					board.put(countRows, i, Tile.PLAYER1);
+					matrix[i][j]=1;
 					break;
 				case '2':
-					board.put(countRows, i, Tile.PLAYER2);
+					matrix[i][j]=2;
 					break;
 				default:
 					throw new Exception();
 				}
 			}
-			countRows++;
+			i++;
 		}
-		if(countRows!=8){
+		if(i!=Board.SIZE){
 			throw new Exception();
 		}
-
+		Board board=new Board(matrix);
 		return board;
 	}
 
-//	public static void main(String[] args) throws Exception {
-//		File file = new File("./src/parser/lala.txt");
-//		Parser test = new Parser(file);
-//		Board boardd = test.parseFile();
-//		System.out.println(boardd);
-//	}
+	public static void main(String[] args) throws Exception {
+		File file = new File("./src/parser/lala.txt");
+		Parser test = new Parser(file);
+		Board boardd = test.parseFile();
+		System.out.println(boardd);
+	}
 
 }

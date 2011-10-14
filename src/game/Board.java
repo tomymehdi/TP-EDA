@@ -49,20 +49,18 @@ public class Board implements Cloneable {
 
 	public Board putTile(int row, int col, Tile tile) {
 
-		Board changed = this.clone();
+		Board clone = this.clone();
 		int count = 0;
-		if (changed.field[row][col] == Tile.EMPTY) {
-			changed.field[row][col] = tile;
+		if (clone.field[row][col] == Tile.EMPTY) {
+			clone.field[row][col] = tile;
 			for (Direction dir : Direction.values()) {
-				count += spread(row + dir.getRow(), col + dir.getCol(), tile, dir);
+				count += clone.spread(row + dir.getRow(), col + dir.getCol(), tile, dir);
 			}
-			if (count == 0) {
-				return changed;
+			if (count > 0) {
+				return clone;
 			}
 		}
-		// TODO* pincha
-		return null;
-
+		return this;
 	}
 
 	public Set<Position> getPossiblePositions(Tile tile) {
@@ -97,9 +95,9 @@ public class Board implements Cloneable {
 	}
 	
 	private int possibleChangeR(int row, int col, Tile tile, Direction dir) {
-		Tile thisTile = field[row][col];
+		Tile thisTile;;
 		if ((row < 0 || row >= SIZE || col < 0 || col >= SIZE)
-				|| thisTile == Tile.EMPTY) {
+				|| (thisTile = field[row][col]) == Tile.EMPTY) {
 			return -1;
 		}
 		if(thisTile==tile.getOpposite()){
@@ -117,9 +115,9 @@ public class Board implements Cloneable {
 	
 	
 	private int spread(int row, int col, Tile tile, Direction dir) {
-		Tile thisTile = field[row][col];
+		Tile thisTile;
 		if ((row < 0 || row >= SIZE || col < 0 || col >= SIZE)
-				|| thisTile == Tile.EMPTY) {
+				|| (thisTile = field[row][col]) == Tile.EMPTY) {
 			return -1;
 		}
 		if(thisTile==tile.getOpposite()){
@@ -165,14 +163,5 @@ public class Board implements Cloneable {
 			s+="\n";
 		}
 		return s;
-	}
-	
-	public static void main(String[] args) {
-		Board b= new Board();
-		System.out.println(b.possibleChange(2, 3, Tile.PLAYER1, Direction.SOUTH));
-		System.out.println(b.possibleChange(2, 3, Tile.PLAYER2, Direction.SOUTH));
-		
-		b.putTile(row, col, tile)
-
 	}
 }
