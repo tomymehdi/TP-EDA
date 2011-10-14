@@ -41,7 +41,8 @@ public abstract class Node{
 		}
 	}
 	
+	
 	public abstract Position nextMove(int maxLevel, int level, boolean prune, int rootVal);
-	public abstract void toDOT(FileWriter fr, boolean red) throws IOException;
+	public abstract int toDOT(FileWriter fr, boolean red, int i) throws IOException;
 	
 }
