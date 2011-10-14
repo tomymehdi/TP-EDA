@@ -1,7 +1,9 @@
 package gui;
 
 import game.Board;
+import game.Tile;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
@@ -36,7 +38,11 @@ public class BoardPanel extends JPanel {
 	private void drawTiles(Graphics g){
 		for(int row=0; row<Board.SIZE; row++){
 			for(int col=0; col<Board.SIZE; col++){
-				if(board.getTile(row,col))
+				Color color;
+				if(board.getTile(row,col).equals(Tile.PLAYER1)){
+					color=Color.BLACK;
+				}
+				else if
 			}
 		}
 	}
