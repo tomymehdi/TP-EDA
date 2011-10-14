@@ -51,7 +51,7 @@ public class Board implements Cloneable {
 				return clone;
 			}
 		}
-		return this;
+		return null;
 	}
 
 	public Set<Position> getPossiblePositions(Tile tile) {
@@ -169,6 +169,9 @@ public class Board implements Cloneable {
 	public Board computerTurn(){
 		MiniMaxTree tree=new MiniMaxTree(4, this, false);
 		Position pos=tree.getNextMove();
+		if(pos == null){
+			return null;
+		}
 		return putTile(pos.getRow(),pos.getCol(),Tile.PLAYER2);
 	}
 }
