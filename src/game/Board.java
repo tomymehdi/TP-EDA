@@ -26,8 +26,21 @@ public class Board implements Cloneable {
 		}
 	}
 	
-	public Board(int a){
-		
+	public Board(int[][] matrix){
+		for(int i=0; i<SIZE; i++){
+			for(int j=0; j<SIZE; j++){
+				switch(matrix[i][j]){
+				case 1:
+					field[i][j]=Tile.PLAYER1;
+					break;
+				case 2:
+					field[i][j]=Tile.PLAYER2;
+					break;
+				default:
+					field[i][j]=Tile.EMPTY;
+				}
+			}
+		}
 	}
 
 	public Tile getTile(int row, int col) {
@@ -158,6 +171,8 @@ public class Board implements Cloneable {
 		Board b= new Board();
 		System.out.println(b.possibleChange(2, 3, Tile.PLAYER1, Direction.SOUTH));
 		System.out.println(b.possibleChange(2, 3, Tile.PLAYER2, Direction.SOUTH));
+		
+		b.putTile(row, col, tile)
 
 	}
 }
