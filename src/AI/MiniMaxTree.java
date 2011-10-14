@@ -10,6 +10,7 @@ public class MiniMaxTree {
 
 	private Node root;
 	int maxLevel;
+	int time;
 	boolean prune;
 
 	public MiniMaxTree(int level, Board board, boolean prune){
@@ -18,8 +19,7 @@ public class MiniMaxTree {
 		this.prune=prune;
 	}
 
-	public Position getNextMove(boolean DOT){
-
+	public Position getNextMove(boolean timed, boolean DOT){
 		Position pos=root.nextMove(maxLevel, 0, prune, Integer.MIN_VALUE);
 		if(pos!=null){
 			if(DOT){
@@ -44,7 +44,7 @@ public class MiniMaxTree {
 					b=false;
 				}
 				aux=i+1;
-				i=son.toDOT(fr, b, ++i);
+				i=son.toDOT(fr, b, false, ++i);
 				fr.append("Root -> " +aux+ ";\n");
 			}
 			
@@ -56,7 +56,7 @@ public class MiniMaxTree {
 	}
 	
 	public static void main(String[] args) {
-		MiniMaxTree t = new MiniMaxTree(10, new Board(), true);
-		t.getNextMove(true);
+		MiniMaxTree t = new MiniMaxTree(4, new Board(), true);
+		t.getNextMove(false, true);
 	}
 }

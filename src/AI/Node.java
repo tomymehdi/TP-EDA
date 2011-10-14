@@ -43,6 +43,33 @@ public abstract class Node{
 	
 	
 	public abstract Position nextMove(int maxLevel, int level, boolean prune, int rootVal);
-	public abstract int toDOT(FileWriter fr, boolean red, int i) throws IOException;
-	
+	public int toDOT(FileWriter fr, boolean red, boolean shape, int i) throws IOException{
+		String s, p;
+		int me = i,aux;
+		if(red){
+			s="color=red, style=filled, ";
+		}else if(pruned){
+			s="color=blue, style=filled, ";
+		}else{
+			s="";
+		}
+		if(shape){
+			p="shape=box, ";
+		}else{
+			p="";
+		}
+		fr.append(me + " ["+s+p+"label=\""+pos.toString() + " " + value +"\"];\n");
+		boolean flag;
+		for(Node son: childs){
+			if(son.value==value){
+				flag=true;
+			}else{
+				flag=false;
+			}
+			aux=i+1;
+			i=son.toDOT(fr, flag, son instanceof MaxNode, ++i); //*TODO turbioo
+			fr.append(me +" -> " + aux +";\n");
+		}
+		return i;
+	}
 }
