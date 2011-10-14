@@ -11,7 +11,7 @@ public class MiniMaxTree {
 
 	public MiniMaxTree(int level, Board board, boolean prune){
 		this.maxLevel=level;
-		root=new MaxNode(board, 0);
+		root=new MaxNode(board, null);
 		this.prune=prune;
 	}
 
