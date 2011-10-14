@@ -5,8 +5,6 @@ import game.Direction;
 import game.Position;
 import game.Tile;
 
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class MaxNode extends Node{
 
