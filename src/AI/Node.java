@@ -1,10 +1,11 @@
 package AI;
 
 import game.Board;
-import game.Direction;
 import game.Position;
 import game.Tile;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ public abstract class Node{
 	Board board;
 	Position pos;
 	int value;
+	boolean pruned;
 	
 	public abstract void setChilds();
 	
@@ -40,5 +42,6 @@ public abstract class Node{
 	}
 	
 	public abstract Position nextMove(int maxLevel, int level, boolean prune, int rootVal);
+	public abstract void toDOT(FileWriter fr, boolean red) throws IOException;
 	
 }

@@ -5,14 +5,17 @@ import game.Direction;
 import game.Position;
 import game.Tile;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class MaxNode extends Node{
-	
+
 	public MaxNode(Board board, Position pos){
 		super.board=board;
 		value=Integer.MIN_VALUE;
 		super.pos=pos;
 	}
-	
+
 	public void setChilds(){
 		int myRow, myCol;
 		for (int row = 0; row < Board.SIZE; row++) {
@@ -22,7 +25,7 @@ public class MaxNode extends Node{
 						myRow = row + dir.getRow();
 						myCol = col + dir.getCol();
 						if (!(myRow < 0 || myCol < 0 || myRow >= Board.SIZE || myCol >= Board.SIZE)
-						&& board.getTile(myRow, myCol) == Tile.EMPTY) {
+								&& board.getTile(myRow, myCol) == Tile.EMPTY) {
 							if (board.possibleChange(myRow, myCol, Tile.PLAYER2, dir.getOpposite())) {
 								childs.add(new MiniNode(board.putTile(myRow, myCol, Tile.PLAYER2), new Position(myRow, myCol)));
 							}
@@ -33,7 +36,7 @@ public class MaxNode extends Node{
 			}
 		}
 	}
-	
+
 	@Override
 	public Position nextMove(int maxLevel, int level, boolean prune, int rootVal){
 		if(maxLevel==level){
@@ -46,6 +49,7 @@ public class MaxNode extends Node{
 			child.nextMove(maxLevel, level+1, prune, value);
 			current=child.value;
 			if(prune && current>=rootVal){
+				child.pruned=true;
 				return null;
 			}
 			if(value>current){
@@ -54,5 +58,28 @@ public class MaxNode extends Node{
 			}
 		}
 		return nextPos;
+	}
+
+
+	public void toDOT(FileWriter fr, boolean red) throws IOException{
+		String s;
+		if(red){
+			s="color=red, style filled";
+		}else if(pruned){
+			s=" color=blue, style=filled,";
+		}else{
+			s="";
+		}
+		fr.append(pos.toString() + " [shape=box,"+s+" label=\""+pos.toString() + " " + value +"\"];\n");
+		boolean flag;
+		for(Node son: childs){
+			if(son.value==value){
+				flag=true;
+			}else{
+				flag=false;
+			}
+			son.toDOT(fr, flag);
+			fr.append(pos.toString() +" -> " + son.pos.toString()+";\n");
+		}
 	}
 }

@@ -5,6 +5,9 @@ import game.Direction;
 import game.Position;
 import game.Tile;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class MiniNode extends Node{
 	
 	public MiniNode(Board board, Position pos){
@@ -46,6 +49,7 @@ public class MiniNode extends Node{
 			child.nextMove(maxLevel, level+1, prune, value);
 			current=child.value;
 			if(prune && current<=rootVal){
+				child.pruned=true;
 				return null;
 			}
 			if(value<current){
@@ -54,5 +58,27 @@ public class MiniNode extends Node{
 			}
 		}
 		return nextPos;
+	}
+	
+	public void toDOT(FileWriter fr, boolean red) throws IOException{
+		String s;
+		if(red){
+			s="color=red, style filled";
+		}else if(pruned){
+			s="color=blue, style=filled, ";
+		}else{
+			s="";
+		}
+		fr.append(pos.toString() + " ["+s+"label=\""+pos.toString() + " " + value +"\"];\n");
+		boolean flag;
+		for(Node son: childs){
+			if(son.value==value){
+				flag=true;
+			}else{
+				flag=false;
+			}
+			son.toDOT(fr, flag);
+			fr.append(pos.toString() +" -> " + son.pos.toString()+";\n");
+		}
 	}
 }
