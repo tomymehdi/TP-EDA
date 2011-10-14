@@ -64,7 +64,7 @@ public class MiniNode extends Node{
 	public void toDOT(FileWriter fr, boolean red) throws IOException{
 		String s;
 		if(red){
-			s="color=red, style filled";
+			s="color=red, style=filled, ";
 		}else if(pruned){
 			s="color=blue, style=filled, ";
 		}else{

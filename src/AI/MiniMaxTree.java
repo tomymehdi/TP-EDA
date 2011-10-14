@@ -34,7 +34,18 @@ public class MiniMaxTree {
 		try{
 			FileWriter fr=new FileWriter("./tree.dot");
 			fr.append("digraph {\n");
-			root.toDOT(fr, true);
+			fr.append("Root [shape=box, color=red, style=filled, label=\"START " + root.value +"\"];\n");
+			boolean b;
+			for(Node son: root.childs){
+				if(root.value==son.value){
+					b=true;
+				}else{
+					b=false;
+				}
+				son.toDOT(fr, b);
+				fr.append("Root -> " + son.pos.toString()+";\n");
+			}
+			
 			fr.append("}");
 			fr.close();
 		}catch(IOException e){
@@ -43,7 +54,7 @@ public class MiniMaxTree {
 	}
 	
 	public static void main(String[] args) {
-		MiniMaxTree t = new MiniMaxTree(1, new Board(), false);
-		getNextMove(boolean);
+		MiniMaxTree t = new MiniMaxTree(3, new Board(), false);
+		t.getNextMove(true);
 	}
 }
