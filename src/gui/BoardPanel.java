@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class BoardPanel extends JPanel {
@@ -27,11 +28,23 @@ public class BoardPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent m) {
 				if (BoardPanel.this.board.isPlayerTurn()) {
-					int row = m.getY() / TILE_SIZE;
-					int col = m.getX() / TILE_SIZE;
-					BoardPanel.this.board = BoardPanel.this.board.putTile(row,
-							col, Tile.PLAYER1);
-					BoardPanel.this.repaint();
+					if (!BoardPanel.this.board.playerHasMoves()) {
+						Board auxBoard = BoardPanel.this.board.computerTurn();
+						if (auxBoard == null) {
+							JOptionPane.showMessageDialog(null,
+									"GAME END", "Error",
+									JOptionPane.ERROR_MESSAGE);
+						} else {
+							setBoard(auxBoard);
+							repaint();
+						}
+					} else {
+						int row = m.getY() / TILE_SIZE;
+						int col = m.getX() / TILE_SIZE;
+						BoardPanel.this.board = BoardPanel.this.board.putTile(
+								row, col, Tile.PLAYER1);
+						BoardPanel.this.repaint();
+					}
 				}
 			}
 		});
