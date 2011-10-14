@@ -42,13 +42,14 @@ public class MaxNode extends Node{
 		}
 		int current;
 		Position nextPos=pos;
+		setChilds();
 		for(Node child:childs){
 			child.nextMove(maxLevel, level+1, prune, value);
 			current=child.value;
 			if(prune && current>=rootVal){
 				return null;
 			}
-			if(value>current){
+			if(value<current){
 				nextPos=child.pos;
 				value=current;
 			}

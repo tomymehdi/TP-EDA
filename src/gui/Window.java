@@ -3,6 +3,8 @@ package gui;
 import game.Board;
 
 import java.awt.FlowLayout;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
 
 import javax.swing.JFrame;
@@ -11,11 +13,9 @@ import javax.swing.JPanel;
 import parser.Parser;
 
 public class Window extends JFrame {
-	private Board board;
 	JPanel boardPanel;
 
 	public Window(Board board) {
-		this.board = board;
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new FlowLayout());
 		boardPanel = new BoardPanel(board);
@@ -25,7 +25,7 @@ public class Window extends JFrame {
 	}
 
 	public Window() {
-		new Window(new Board());
+		this(new Board());
 	}
 
 
@@ -37,6 +37,7 @@ public class Window extends JFrame {
 		} catch(Exception e){
 			throw new RuntimeException("Invalid File");
 		}
+		b=new Board();
 		new Window(b);
 	}
 }
