@@ -1,18 +1,22 @@
 package parser;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ConsoleArguments {
 
 	private String[] args;
-	private boolean visual = false;
-	private boolean file = false;
-	private boolean player = false;
-	private boolean maxtime = false;
-	private boolean depth = false;
-	private boolean prune = false;
-	private boolean tree = false;
+	private Map<String,Boolean> arguments = new HashMap<String,Boolean>();
 
 	public ConsoleArguments(String[] args) {
 		this.args = args;
+		arguments.put("-visual", false);
+		arguments.put("-file", false);
+		arguments.put("-player", false);
+		arguments.put("-maxtime", false);
+		arguments.put("-depth", false);
+		arguments.put("-prune", false);
+		arguments.put("-tree", false);
 	}
 
 	public static void main(String[] args) {
@@ -21,13 +25,13 @@ public class ConsoleArguments {
 		}
 		ConsoleArguments aux = new ConsoleArguments(args);
 		aux.verifyArguments();
-		System.out.println(aux.visual);
-		System.out.println(aux.file);
-		System.out.println(aux.player);
-		System.out.println(aux.maxtime);
-		System.out.println(aux.depth);
-		System.out.println(aux.prune);
-		System.out.println(aux.tree);
+		System.out.println(aux.arguments.get("-visual"));
+		System.out.println(aux.arguments.get("-file"));
+		System.out.println(aux.arguments.get("-player"));
+		System.out.println(aux.arguments.get("-maxtime"));
+		System.out.println(aux.arguments.get("-depth"));
+		System.out.println(aux.arguments.get("-prune"));
+		System.out.println(aux.arguments.get("-tree"));
 	}
 
 	public void verifyArguments() {
@@ -36,25 +40,25 @@ public class ConsoleArguments {
 			sArgs += s;
 		}
 		if (sArgs.contains("-visual")) {
-			visual = true;
+			arguments.put("-visual", true);
 		}
 		if (sArgs.contains("-file")) {
-			file = true;
+			arguments.put("-file", true);
 		}
 		if (sArgs.contains("-player")) {
-			player = true;
+			arguments.put("-player", true);
 		}
 		if (sArgs.contains("-maxtime")) {
-			maxtime = true;
+			arguments.put("-maxtime", true);
 		}
 		if (sArgs.contains("-depth")) {
-			depth = true;
+			arguments.put("-depth", true);
 		}
 		if (sArgs.contains("-prune")) {
-			prune = true;
+			arguments.put("-prune", true);
 		}
 		if (sArgs.contains("-tree")) {
-			tree = true;
+			arguments.put("-tree", true);
 		}
 
 		if (!((visual & !file & !player) || (!visual & file & player))) {
@@ -64,6 +68,8 @@ public class ConsoleArguments {
 		if (!((maxtime & !depth) || (!maxtime & depth))) {
 			throw new RuntimeException();
 		}
+		
+		
 
 	}
 
