@@ -6,6 +6,8 @@ import game.Tile;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -30,10 +32,17 @@ public class BoardPanel extends JPanel {
 					BoardPanel.this.board.setPlayerTurn(false);
 					BoardPanel.this.repaint();	
 				}
-				else{
-					System.out.println("Not player turn");
-				}
 			}			
+		});
+		addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				System.out.println("xd");
+				if(e.getKeyCode()==KeyEvent.VK_ENTER && !BoardPanel.this.board.isPlayerTurn()){
+					BoardPanel.this.board=BoardPanel.this.board.computerTurn();
+					BoardPanel.this.repaint();
+				}
+			}
 		});
 	}
 	

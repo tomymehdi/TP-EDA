@@ -45,6 +45,7 @@ public class MiniNode extends Node{
 		}
 		int current;
 		Position nextPos=pos;
+		setChilds();
 		for(Node child:childs){
 			child.nextMove(maxLevel, level+1, prune, value);
 			current=child.value;
@@ -52,7 +53,7 @@ public class MiniNode extends Node{
 				child.pruned=true;
 				return null;
 			}
-			if(value<current){
+			if(value>current){
 				nextPos=child.pos;
 				value=current;
 			}
