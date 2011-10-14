@@ -61,28 +61,5 @@ public class MiniNode extends Node{
 		return nextPos;
 	}
 	
-	public int toDOT(FileWriter fr, boolean red, int i) throws IOException{
-		String s;
-		int me = i,aux;
-		if(red){
-			s="color=red, style=filled, ";
-		}else if(pruned){
-			s="color=blue, style=filled, ";
-		}else{
-			s="";
-		}
-		fr.append(me + " ["+s+"label=\""+pos.toString() + " " + value +"\"];\n");
-		boolean flag;
-		for(Node son: childs){
-			if(son.value==value){
-				flag=true;
-			}else{
-				flag=false;
-			}
-			aux=i+1;
-			i=son.toDOT(fr, flag, ++i);
-			fr.append(me +" -> " + aux +";\n");
-		}
-		return i;
-	}
+	
 }
