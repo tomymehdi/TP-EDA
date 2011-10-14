@@ -6,17 +6,17 @@ import java.util.Map;
 public class ConsoleArguments {
 
 	private String[] args;
-	private Map<String,Boolean> arguments = new HashMap<String,Boolean>();
+	private Map<String, Argument> arguments = new HashMap<String, Argument>();
 
 	public ConsoleArguments(String[] args) {
 		this.args = args;
-		arguments.put("-visual", false);
-		arguments.put("-file", false);
-		arguments.put("-player", false);
-		arguments.put("-maxtime", false);
-		arguments.put("-depth", false);
-		arguments.put("-prune", false);
-		arguments.put("-tree", false);
+		arguments.put("-visual", new Argument());
+		arguments.put("-file", new Argument());
+		arguments.put("-player", new ArgumentWithNumber());
+		arguments.put("-maxtime", new ArgumentWithNumber());
+		arguments.put("-depth", new ArgumentWithNumber());
+		arguments.put("-prune", new Argument());
+		arguments.put("-tree", new Argument());
 	}
 
 	public static void main(String[] args) {
@@ -40,37 +40,56 @@ public class ConsoleArguments {
 			sArgs += s;
 		}
 		if (sArgs.contains("-visual")) {
-			arguments.put("-visual", true);
+			arguments.get("-visual").setIsOn(true);
 		}
 		if (sArgs.contains("-file")) {
-			arguments.put("-file", true);
+			arguments.get("-file").setIsOn(true);
 		}
 		if (sArgs.contains("-player")) {
-			arguments.put("-player", true);
+			arguments.get("-player").setIsOn(true);
+			verifyNumberArgument("-player");
 		}
 		if (sArgs.contains("-maxtime")) {
-			arguments.put("-maxtime", true);
+			arguments.get("-maxtime").setIsOn(true);
+			verifyNumberArgument("-maxtime");
 		}
 		if (sArgs.contains("-depth")) {
-			arguments.put("-depth", true);
+			arguments.get("-depth").setIsOn(true);
+			verifyNumberArgument("-depth");
 		}
 		if (sArgs.contains("-prune")) {
-			arguments.put("-prune", true);
+			arguments.get("-prune").setIsOn(true);
 		}
 		if (sArgs.contains("-tree")) {
-			arguments.put("-tree", true);
+			arguments.get("-tree").setIsOn(true);
 		}
 
-		if (!((visual & !file & !player) || (!visual & file & player))) {
-			throw new RuntimeException();
+		if (!((arguments.get("-visual").getIsOn()
+				& !arguments.get("-file").getIsOn() & !arguments.get("-player")
+				.getIsOn()) || (!arguments.get("-player").getIsOn()
+				& arguments.get("-file").getIsOn() & arguments.get("-player")
+				.getIsOn()))) {
+			System.out.println("Incorrect arguments");
 		}
 
-		if (!((maxtime & !depth) || (!maxtime & depth))) {
-			throw new RuntimeException();
+		if (!((arguments.get("-maxtime").getIsOn()
+				& !arguments.get("-depth").getIsOn() || (!arguments.get(
+				"-maxtime").getIsOn() & arguments.get("-depth").getIsOn())))) {
+			System.out.println("Incorrect arguments");
 		}
-		
-		
-
 	}
 
+	private void verifyNumberArgument(String string) {
+		int i = 0;
+		while (!args[i].equals(string)) {
+			i++;
+		}
+		i++;
+		int value = Integer.parseInt(args[i]);
+		if (!(value == 1 || value == 2)) {
+			System.out.println("Incorrect arguments");
+		}
+		((ArgumentWithNumber)arguments.get(string)).setNumber(value);
+		
+	}
 }
