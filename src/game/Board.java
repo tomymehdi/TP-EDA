@@ -5,42 +5,26 @@ import java.util.Set;
 
 public class Board implements Cloneable {
 
+	public static final Tile[][] DEFAULT_FIELD={{Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY},
+												{Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY},
+												{Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY},
+												{Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.PLAYER1,Tile.PLAYER2,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY},
+												{Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.PLAYER2,Tile.PLAYER1,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY},
+												{Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY},
+												{Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY},
+												{Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY}};
 	public static final int SIZE = 8;
-
+	private boolean playerTurn;
 	private Tile[][] field = new Tile[SIZE][SIZE];
 	private boolean pass;
 
 	public Board() {
-		for (int row = 0; row < SIZE; row++) {
-			for (int col = 0; col < SIZE; col++) {
-				if ((row == (SIZE / 2) - 1 && col == (SIZE / 2) - 1)
-						|| (row == SIZE / 2 && col == SIZE / 2)) {
-					field[row][col] = Tile.PLAYER1;
-				} else if ((row == (SIZE / 2) - 1 && col == (SIZE / 2))
-						|| (row == SIZE / 2 && col == (SIZE / 2) - 1)) {
-					field[row][col] = Tile.PLAYER2;
-				} else {
-					field[row][col] = Tile.EMPTY;
-				}
-			}
-		}
+		new Board(DEFAULT_FIELD);		
 	}
 	
-	public Board(int[][] matrix){
-		for(int i=0; i<SIZE; i++){
-			for(int j=0; j<SIZE; j++){
-				switch(matrix[i][j]){
-				case 1:
-					field[i][j]=Tile.PLAYER1;
-					break;
-				case 2:
-					field[i][j]=Tile.PLAYER2;
-					break;
-				default:
-					field[i][j]=Tile.EMPTY;
-				}
-			}
-		}
+	public Board(Tile[][] field){
+		this.field=field;
+		playerTurn=true;
 	}
 
 	public Tile getTile(int row, int col) {
@@ -54,7 +38,11 @@ public class Board implements Cloneable {
 		if (clone.field[row][col] == Tile.EMPTY) {
 			clone.field[row][col] = tile;
 			for (Direction dir : Direction.values()) {
-				count += clone.spread(row + dir.getRow(), col + dir.getCol(), tile, dir);
+				int rta;
+				rta=clone.spread(row + dir.getRow(), col + dir.getCol(), tile, dir);
+				if(rta>0){
+					count +=rta;
+				}
 			}
 			if (count > 0) {
 				return clone;
@@ -144,9 +132,13 @@ public class Board implements Cloneable {
 	}
 
 	public Board clone() {
-		Board cloned = new Board();
-		cloned.field = this.field.clone();
-		return cloned;
+		Tile[][] clonedField=new Tile[SIZE][SIZE];
+		for(int row=0; row<SIZE; row++){
+			for(int col=0; col<SIZE; col++){
+				clonedField[row][col]=field[row][col];
+			}
+		}
+		return new Board(clonedField);
 	}
 
 	public void put(int row, int col, Tile tile) {
@@ -163,5 +155,13 @@ public class Board implements Cloneable {
 			s+="\n";
 		}
 		return s;
+	}
+	
+	public boolean isPlayerTurn() {
+		return playerTurn;
+	}
+	
+	public void setPlayerTurn(boolean playerTurn) {
+		this.playerTurn = playerTurn;
 	}
 }
