@@ -24,7 +24,7 @@ public class MaxNode extends Node{
 						if (!(myRow < 0 || myCol < 0 || myRow >= Board.SIZE || myCol >= Board.SIZE)
 						&& board.getTile(myRow, myCol) == Tile.EMPTY) {
 							if (board.possibleChange(myRow, myCol, Tile.PLAYER2, dir.getOpposite())) {
-								childs.add(new MiniNode(board.putTile(myRow, myCol, Tile.PLAYER2, new Position(myRow, myCol))));
+								childs.add(new MiniNode(board.putTile(myRow, myCol, Tile.PLAYER2), new Position(myRow, myCol)));
 							}
 
 						}
