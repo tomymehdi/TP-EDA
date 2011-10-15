@@ -17,6 +17,7 @@ public class MiniMaxTree {
 		this.maxLevel = level;
 		root = new MaxNode(board, null);
 		this.prune = prune;
+		this.DOT=DOT;
 	}
 
 	public Position getNextMove() {
@@ -31,7 +32,7 @@ public class MiniMaxTree {
 		return null;
 	}
 
-	public void generateDOT() {
+	private void generateDOT() {
 		try {
 			int i = 0, aux;
 			FileWriter fr = new FileWriter("./tree.dot");
@@ -53,12 +54,12 @@ public class MiniMaxTree {
 			fr.append("}");
 			fr.close();
 		} catch (IOException e) {
-			System.out.println("error");
+			throw new RuntimeException();
 		}
 	}
 
 	public static void main(String[] args) {
-		MiniMaxTree t = new MiniMaxTree(4, new Board(), false, true);
+		MiniMaxTree t = new MiniMaxTree(2, new Board(), false, true);
 		t.getNextMove();
 	}
 }

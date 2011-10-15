@@ -28,7 +28,7 @@ public class Board implements Cloneable {
 					Tile.EMPTY, Tile.EMPTY, Tile.EMPTY } };
 	public static final int SIZE = 8;
 	private Tile[][] field;
-	private boolean playerTurn;
+	private boolean playerTurn=true;
 
 	public Board(){
 		this(DEFAULT_FIELD);
