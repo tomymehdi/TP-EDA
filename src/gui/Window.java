@@ -12,14 +12,16 @@ import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 public class Window extends JFrame {
-
 	
 	GamePanel gPanel;
 	Reversi game;
 	JButton passButton;
+	JButton newGameButton;
 
 	public Window(int level, boolean pruned, boolean timed){
 		GameListener listener=new GameListener(){
@@ -49,6 +51,7 @@ public class Window extends JFrame {
 			
 			public void enablePass() {
 				passButton.setEnabled(true);
+				passButton.repaint();
 			}
 		};
 		game=new Reversi(listener, level, pruned, timed);
@@ -58,6 +61,16 @@ public class Window extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new FlowLayout());
 		
+		newGameButton=new JButton("New Game");
+		newGameButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Window.this.game.newGame();
+				repaint();
+			}
+		});
+		add(newGameButton);
+		
 		gPanel = new GamePanel(game);
 		add(gPanel);
 		
@@ -65,11 +78,12 @@ public class Window extends JFrame {
 		passButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Window.this.game.computerTurn();
 				Window.this.passButton.setEnabled(false);
+				Window.this.game.computerTurn();
+				repaint();
 			}
 		});
-		passButton.setEnabled(false);
+		//passButton.setEnabled(false);
 		add(passButton);
 		pack();
 		setVisible(true);

@@ -9,18 +9,18 @@ import AI.MiniMaxTree;
 
 public class Reversi {
 	private Board board;
-	private boolean pass, pruned, timed;
+	private boolean pruned, timed;
 	private GameListener listener;
-	private boolean playerCanMove=true;
+	private boolean playerCanMove;
 	private int level;
+	private boolean playerTurn;
 	
 	public Reversi(GameListener listener,int level, boolean pruned, boolean timed){
 		this.listener=listener;
-		this.board=new Board();
 		this.timed=timed;
 		this.pruned=pruned;
 		this.level=level;
-		
+		newGame();
 	}
 	
 	private void endOfGame() {
@@ -48,6 +48,7 @@ public class Reversi {
 			board=board.putTile(pos.getRow(), pos.getCol(), Tile.PLAYER2);
 			cpuCanMove=true;
 		}
+		playerTurn=true;
 		playerCanMove=board.playerHasMoves();
 		if(!playerCanMove){
 			if(cpuCanMove){
@@ -61,13 +62,14 @@ public class Reversi {
 	}
 	
 	public boolean PlayerTurn(int row, int col){
-		if(board.isPlayerTurn()&& playerCanMove){
+		if(playerTurn&& playerCanMove){
 				Board auxBoard=board.putTile(row, col, Tile.PLAYER1);
 				if(auxBoard==board){
 					//Toco un lugar incorrecto
 					return false;
 				}
 				board=auxBoard;
+				playerTurn=false;
 				return true;
 		}
 		return false;
@@ -75,5 +77,16 @@ public class Reversi {
 	
 	public Board getBoard() {
 		return board;
+	}
+	
+	public void newGame(){
+		Tile[][] field={{Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY},
+						{Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY},
+						{Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY},
+						{Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.PLAYER1,Tile.PLAYER1},
+						{Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.PLAYER1,Tile.PLAYER2}};
+		board=new Board(field);
+		playerTurn=true;
+		playerCanMove=true;
 	}
 }

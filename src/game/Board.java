@@ -26,9 +26,8 @@ public class Board implements Cloneable {
 					Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
 			{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,
 					Tile.EMPTY, Tile.EMPTY, Tile.EMPTY } };
-	public static final int SIZE = 8;
+	public static final int SIZE = 5;
 	private Tile[][] field;
-	private boolean playerTurn=true;
 
 	public Board(){
 		this(DEFAULT_FIELD);
@@ -57,7 +56,6 @@ public class Board implements Cloneable {
 				}
 			}
 			if (count > 0) {
-				clone.playerTurn=!playerTurn;
 				return clone;
 			}
 		}
@@ -161,12 +159,8 @@ public class Board implements Cloneable {
 		return s;
 	}
 
-	public boolean isPlayerTurn() {
-		return playerTurn;
-	}
-
 	public boolean playerHasMoves() {
-		int myRow, myCol, posibleMoves = 0;
+		int myRow, myCol, possibleMoves = 0;
 		for (int row = 0; row < Board.SIZE; row++) {
 			for (int col = 0; col < Board.SIZE; col++) {
 				if (getTile(row, col) == Tile.PLAYER2) {
@@ -177,7 +171,7 @@ public class Board implements Cloneable {
 								&& getTile(myRow, myCol) == Tile.EMPTY) {
 							if (possibleChange(myRow, myCol, Tile.PLAYER1,
 									dir.getOpposite())) {
-								posibleMoves++;
+								possibleMoves++;
 							}
 
 						}
@@ -185,7 +179,8 @@ public class Board implements Cloneable {
 				}
 			}
 		}
-		return posibleMoves >= 1;
+		System.out.println(possibleMoves);
+		return possibleMoves >= 1;
 	}
 
 }
