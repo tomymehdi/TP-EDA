@@ -1,0 +1,14 @@
+<project name="Reveri" default="dist" basedir=".">
+	<!-- Compila el proyecto, deja los archivos class en el directorio bin -->
+	<target name="compile">
+		<mkdir dir="bin"/>
+	</target>
+	<!-- Crea el jar ejecutable con todo el proyecto compilado. -->
+	<target name="dist" depends="compile">
+		<jar destfile="Reversi.jar" basedir="bin">
+			<manifest>
+				<attribute name="Main-Class" value="game.Main"/>
+			</manifest>
+		</jar>
+	</target>
+</project>
