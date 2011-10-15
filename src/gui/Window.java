@@ -16,7 +16,7 @@ public class Window extends JFrame {
 	Reversi game;
 	JButton passButton;
 
-	public Window(){
+	public Window(int level, boolean pruned, boolean timed){
 		GameListener listener=new GameListener(){
 			public void endOfGame(int score) {
 				String endMessage;
@@ -36,7 +36,7 @@ public class Window extends JFrame {
 				passButton.setEnabled(true);
 			}
 		};
-		game=new Reversi(listener);
+		game=new Reversi(listener, level, pruned, timed);
 		
 		
 		//Swing
@@ -60,7 +60,4 @@ public class Window extends JFrame {
 		setVisible(true);
 	}
 
-	public static void main(String[] args) {
-		new Window();
-	}
 }

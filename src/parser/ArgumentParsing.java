@@ -1,19 +1,21 @@
 package parser;
 
 import java.io.File;
+import java.io.IOException;
 
 public class ArgumentParsing {
 
 	private String[] args;
-	boolean isVisual, timed, pruned, DOT;
-	String fileName;
-	int player, level;
+	private boolean isVisual, timed, pruned, DOT;
+	private File file;
+	private int player, level;
 
 	public ArgumentParsing(String[] args){
 		this.args=args;
+		parse();
 	}
 
-	public void parse(){
+	private void parse(){
 		int i=0;
 		i=setGameMode(i);
 		i=setAIProcessing(i);
@@ -30,7 +32,8 @@ public class ArgumentParsing {
 			return i+1;
 		}else if(args[i].equals("-file")){
 			i++;
-			fileName=args[i];
+			String name = "./"+args[i];
+			file = new File(name);
 			i++;
 			if(!args[i].equals("-player")){
 				throw new ParsingException();
@@ -94,6 +97,30 @@ public class ArgumentParsing {
 		}
 		return i;
 	}
+	
+	public File getFile() {
+		return file;
+	}
+	public int getLevel() {
+		return level;
+	}
+	public int getStartingPlayer() {
+		return player;
+	}
+	public boolean isDOT() {
+		return DOT;
+	}
+	public boolean isPruned() {
+		return pruned;
+	}
+	public boolean isTimed() {
+		return timed;
+	}
+	public boolean isVisual() {
+		return isVisual;
+	}
+	
+	
 	
 //	private void print(){
 //		System.out.println("visual " + isVisual +"\ntiempo " + timed + "\npoda " + pruned + "\ndot " + DOT +"\nnivel " + level);

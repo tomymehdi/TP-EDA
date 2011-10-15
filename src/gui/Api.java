@@ -4,7 +4,7 @@ import game.Board;
 
 import java.io.File;
 
-import parser.Parser;
+import parser.BoardParser;
 
 public class Api {
 //	public static void main(String[] args) {
