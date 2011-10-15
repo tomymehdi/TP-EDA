@@ -2,8 +2,7 @@ package game;
 
 import gui.Window;
 
-import java.io.File;
-import java.io.IOException;
+
 
 import AI.MiniMaxTree;
 
@@ -15,7 +14,7 @@ public class Main {
 	public static void main(String[] args) {
 		ArgumentParsing argParser = new ArgumentParsing(args);
 		if(argParser.isVisual()){
-			Window w = new Window(argParser.getLevel(), argParser.isPruned(), argParser.isTimed());
+			new Window(argParser.getLevel(), argParser.isPruned(), argParser.isTimed());
 		}else{
 			try{
 				BoardParser boardParser = new BoardParser(argParser.getFile());
