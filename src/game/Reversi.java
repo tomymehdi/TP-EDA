@@ -3,7 +3,7 @@ package game;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-import parser.Parser;
+import parser.BoardParser;
 
 import AI.MiniMaxTree;
 
@@ -14,7 +14,7 @@ public class Reversi {
 	private boolean playerCanMove=true;
 	
 	public Reversi(File boardFile, GameListener listener){
-		Parser p = new Parser(boardFile);
+		BoardParser p = new BoardParser(boardFile);
 		Board board;
 		try {
 			board = p.parseFile();
