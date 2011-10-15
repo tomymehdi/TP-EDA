@@ -17,6 +17,9 @@ public class ArgumentParsing {
 
 	private void parse(){
 		int i=0;
+		if(args.length==0){
+			throw new ParsingException();
+		}
 		i=setGameMode(i);
 		i=setAIProcessing(i);
 		i=setOptionals(i);
@@ -28,9 +31,15 @@ public class ArgumentParsing {
 
 	private int setGameMode(int i){
 		if(args[i].equals("-visual")){
+			if(args.length<3){
+				throw new ParsingException();
+			}
 			isVisual=true;
 			return i+1;
 		}else if(args[i].equals("-file")){
+			if(args.length<6){
+				throw new ParsingException();
+			}
 			i++;
 			String name = "./"+args[i];
 			file = new File(name);

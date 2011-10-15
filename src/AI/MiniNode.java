@@ -19,8 +19,11 @@ public class MiniNode extends Node{
 	}
 
 	@Override
-	public boolean pruneBranch(int val) {
-		return value<=val;
+	public boolean pruneBranch(Integer val) {
+		if(val!=null){
+			return value<=val;
+		}
+		return false;
 	}
 
 	@Override

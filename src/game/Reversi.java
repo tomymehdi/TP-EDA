@@ -41,7 +41,7 @@ public class Reversi {
 	}
 	
 	public void computerTurn() {
-		MiniMaxTree tree = new MiniMaxTree(level, board, pruned, false);
+		MiniMaxTree tree = new MiniMaxTree(level, board, pruned, timed, false);
 		Position pos = tree.getNextMove();
 		boolean cpuCanMove=false;
 		if (pos != null) {

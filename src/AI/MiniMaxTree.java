@@ -7,22 +7,22 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class MiniMaxTree {
-
+//*TODO ASK ANDI
 	private Node root;
 	int maxLevel;
-	boolean prune;
-	boolean DOT;
+	boolean prune, timed, DOT;
 
-	public MiniMaxTree(int level, Board board, boolean prune, boolean DOT) {
+	public MiniMaxTree(int level, Board board, boolean prune, boolean timed, boolean DOT) {
 		this.maxLevel = level;
 		root = new MaxNode(board, null);
 		this.prune = prune;
 		this.DOT=DOT;
+		this.timed=timed;
 	}
 
 	public Position getNextMove() {
 
-		Position pos = root.nextMove(maxLevel, 0, prune, Integer.MIN_VALUE);
+		Position pos = root.nextMove(maxLevel, 0, prune, timed, null);
 		if (pos != null) {
 			if (DOT) {
 				generateDOT();
@@ -59,7 +59,7 @@ public class MiniMaxTree {
 	}
 
 	public static void main(String[] args) {
-		MiniMaxTree t = new MiniMaxTree(2, new Board(), false, true);
+		MiniMaxTree t = new MiniMaxTree(4, new Board(), true, false, true);
 		t.getNextMove();
 	}
 }
