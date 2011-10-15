@@ -32,13 +32,25 @@ public class Reversi {
 	}
 	
 	private void endOfGame() {
-		//*TODO chequear quien gano
-		listener.endOfGame();
+		int playerCount=0;
+		int computerCount=0;
+		Tile[][] field=board.getField();
+		for(int row=0; row<Board.SIZE; row++){
+			for(int col=0; col<Board.SIZE; col++){
+				if(field[row][col]==Tile.PLAYER1){
+					playerCount++;
+				}
+				else if(field[row][col]==Tile.PLAYER2){
+					computerCount++;
+				}
+			}
+		}
+		listener.endOfGame(playerCount-computerCount);
 	}
 	
 	public void computerTurn() {
-		MiniMaxTree tree = new MiniMaxTree(2, board, false);
-		Position pos = tree.getNextMove(false);
+		MiniMaxTree tree = new MiniMaxTree(2, board, false, false);
+		Position pos = tree.getNextMove();
 		boolean cpuCanMove=false;
 		if (pos != null) {
 			board=board.putTile(pos.getRow(), pos.getCol(), Tile.PLAYER2);

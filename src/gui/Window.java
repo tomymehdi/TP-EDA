@@ -18,8 +18,18 @@ public class Window extends JFrame {
 
 	public Window(){
 		GameListener listener=new GameListener(){
-			public void endOfGame() {
-				JOptionPane.showMessageDialog(Window.this, "Game Over","End", JOptionPane.INFORMATION_MESSAGE);
+			public void endOfGame(int score) {
+				String endMessage;
+				if(score>0){
+					endMessage="You have won!";
+				}
+				else if(score<0){
+					endMessage="You have lost!";
+				}
+				else{
+					endMessage="It's a tie!";
+				}
+				JOptionPane.showMessageDialog(Window.this, endMessage,"End", JOptionPane.INFORMATION_MESSAGE);
 			}
 			
 			public void enablePass() {
