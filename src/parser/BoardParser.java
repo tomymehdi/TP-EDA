@@ -5,32 +5,27 @@ import game.Tile;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
 
 public class BoardParser {
 
-	private File file;
-	public BoardParser(File file) {
-		this.file = file;
-		try {
-			new BufferedReader(new FileReader(file));
-		} catch (Exception e) {
-			System.out.println("An error occurred while opening the requested file");
-		}
+	private BufferedReader buffer;
+	
+	public BoardParser(File file) throws FileNotFoundException {
+		buffer = new BufferedReader(new FileReader(file));
 	}
 
-	public Board parseFile(){
+	public Board parseFile() throws IOException{
 		Tile [][] matrix= new Tile[Board.SIZE][Board.SIZE];
 		int i=0;
 		String line;
 		char[] charLine;
-		try{
-		BufferedReader inputFile = new BufferedReader(new FileReader(file));
-		while ((line = inputFile.readLine()) != null) {
+		while ((line = buffer.readLine()) != null) {
 			if (line.length() != Board.SIZE || i > Board.SIZE) {
-				System.out.println("Invalid board size");
+				throw new ParsingException();
 			}
 			charLine = line.toCharArray();
 			for (int j = 0; j < Board.SIZE; j++) {
@@ -46,15 +41,14 @@ public class BoardParser {
 					break;
 				default:
 					System.out.println("Invalid board");
+					return null;
 				}
 			}
 			i++;
 		}
-		}catch(IOException e){
-			System.out.println("Invalid board");
-		}
+		
 		if(i!=Board.SIZE){
-			System.out.println("Invalid board size");
+			throw new ParsingException();
 		}
 		Board board=new Board(matrix);
 		return board;

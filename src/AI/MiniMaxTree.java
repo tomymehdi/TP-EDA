@@ -58,7 +58,7 @@ public class MiniMaxTree {
 	}
 
 	public static void main(String[] args) {
-		MiniMaxTree t = new MiniMaxTree(4, new Board(), false, true);
+		MiniMaxTree t = new MiniMaxTree(2, new Board(), false, true);
 		t.getNextMove();
 	}
 }

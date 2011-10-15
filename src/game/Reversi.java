@@ -8,27 +8,21 @@ import parser.BoardParser;
 import AI.MiniMaxTree;
 
 public class Reversi {
-	Board board;
-	private boolean pass;
+	private Board board;
+	private boolean pass, pruned, timed;
 	private GameListener listener;
 	private boolean playerCanMove=true;
+	private int level;
 	
-	public Reversi(File boardFile, GameListener listener){
-		BoardParser p = new BoardParser(boardFile);
-		Board board;
-		try {
-			board = p.parseFile();
-		} catch (Exception e) {
-			throw new RuntimeException("Invalid File");
-		}
-		board = new Board();
-		this.listener=listener;
-		this.board=board;
-	}
 	
-	public Reversi(GameListener listener){
+	
+	public Reversi(GameListener listener,int level, boolean pruned, boolean timed){
 		this.listener=listener;
 		this.board=new Board();
+		this.timed=timed;
+		this.pruned=pruned;
+		this.level=level;
+		
 	}
 	
 	private void endOfGame() {
@@ -49,7 +43,7 @@ public class Reversi {
 	}
 	
 	public void computerTurn() {
-		MiniMaxTree tree = new MiniMaxTree(2, board, false, false);
+		MiniMaxTree tree = new MiniMaxTree(level, board, pruned, false);
 		Position pos = tree.getNextMove();
 		boolean cpuCanMove=false;
 		if (pos != null) {
