@@ -71,11 +71,7 @@ public abstract class Node{
 		}else{
 			s="";
 		}
-		if(this instanceof MaxNode){//*TODO turbioo
-			p="shape=box, ";
-		}else{
-			p="";
-		}
+		p=getDOTFormat();
 		fr.append(me + " ["+s+p+"label=\""+pos.toString() + " " + value +"\"];\n");
 		boolean flag;
 		for(Node son: childs){
@@ -125,4 +121,5 @@ public abstract class Node{
 	
 	public abstract boolean chooseMove(int val);
 	public abstract boolean pruneBranch(int val);
+	public abstract String getDOTFormat();
 }

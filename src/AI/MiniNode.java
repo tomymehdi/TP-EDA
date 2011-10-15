@@ -22,5 +22,8 @@ public class MiniNode extends Node{
 		return value<=val;
 	}
 
-	
+	@Override
+	public String getDOTFormat() {
+		return "";
+	}
 }

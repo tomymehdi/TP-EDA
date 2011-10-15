@@ -1,5 +1,6 @@
 package game;
 
+import java.awt.event.ActionListener;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,9 +27,8 @@ public class Board implements Cloneable {
 			{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,
 					Tile.EMPTY, Tile.EMPTY, Tile.EMPTY } };
 	public static final int SIZE = 8;
-	private boolean playerTurn;
 	private Tile[][] field = new Tile[SIZE][SIZE];
-	private boolean pass;
+	private boolean playerTurn;
 
 	public Board() {
 		this(DEFAULT_FIELD);
@@ -36,7 +36,7 @@ public class Board implements Cloneable {
 
 	public Board(Tile[][] field) {
 		this.field = field;
-		playerTurn = true;
+		this.playerTurn=true;
 	}
 
 	public Tile getTile(int row, int col) {
@@ -136,17 +136,6 @@ public class Board implements Cloneable {
 		return 0;
 	}
 
-	public void checkEndGame(Tile tile) {
-		if (getPossiblePositions(tile).isEmpty()) {
-			if (pass) {
-				// *TODO endgame
-			} else {
-				pass = true;
-				// *TODO pass
-			}
-		}
-	}
-
 	public Board clone() {
 		Tile[][] clonedField = new Tile[SIZE][SIZE];
 		for (int row = 0; row < SIZE; row++) {
@@ -181,16 +170,6 @@ public class Board implements Cloneable {
 		this.playerTurn = playerTurn;
 	}
 
-
-	public Board computerTurn() {
-		MiniMaxTree tree = new MiniMaxTree(4, this, false);
-		Position pos = tree.getNextMove(false);
-		if (pos == null) {
-			return null;
-		}
-		return putTile(pos.getRow(), pos.getCol(), Tile.PLAYER2);
-	}
-
 	public boolean playerHasMoves() {
 		int myRow, myCol, posibleMoves = 0;
 		for (int row = 0; row < Board.SIZE; row++) {
@@ -211,6 +190,7 @@ public class Board implements Cloneable {
 				}
 			}
 		}
+		System.out.println(posibleMoves);
 		return posibleMoves >= 1;
 	}
 }

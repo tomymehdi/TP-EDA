@@ -21,4 +21,9 @@ public class MaxNode extends Node{
 	public boolean pruneBranch(int val) {
 		return value>=val;
 	}
+
+	@Override
+	public String getDOTFormat() {
+		return "shape=box,";
+	}
 }

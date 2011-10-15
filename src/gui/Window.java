@@ -1,66 +1,56 @@
 package gui;
 
-import game.Board;
+import game.GameListener;
+import game.Reversi;
 
 import java.awt.FlowLayout;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.io.File;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-
-import parser.Parser;
 
 public class Window extends JFrame {
-	BoardPanel boardPanel;
+	GamePanel gPanel;
+	Reversi game;
+	JButton passButton;
 
-	public Window(Board board) {
+	public Window(){
+		GameListener listener=new GameListener(){
+			public void endOfGame() {
+				JOptionPane.showMessageDialog(Window.this, "Game Over","End", JOptionPane.INFORMATION_MESSAGE);
+			}
+			
+			public void enablePass() {
+				passButton.setEnabled(true);
+			}
+		};
+		game=new Reversi(listener);
+		
+		
+		//Swing
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new FlowLayout());
-		boardPanel = new BoardPanel(board);
-		add(boardPanel);
-		addKeyListener(new KeyAdapter() {
+		
+		gPanel = new GamePanel(game);
+		add(gPanel);
+		
+		passButton=new JButton("pass");
+		passButton.addActionListener(new ActionListener() {
 			@Override
-			public void keyPressed(KeyEvent e) {
-				Board b = Window.this.boardPanel.getBoard();
-				if (e.getKeyCode() == KeyEvent.VK_ENTER && !b.isPlayerTurn()) {
-					Board auxBoard = b.computerTurn();
-					if (auxBoard == null) {
-						if (!Window.this.boardPanel.getBoard().playerHasMoves()) {
-							JOptionPane.showMessageDialog(null, "GAME END",
-									"Error", JOptionPane.ERROR_MESSAGE);
-						} else {
-							Window.this.boardPanel.getBoard().setPlayerTurn(true);
-							JOptionPane.showMessageDialog(null,
-									"No posible moves", "Error",
-									JOptionPane.ERROR_MESSAGE);
-						}
-					} else {
-						Window.this.boardPanel.setBoard(auxBoard);
-						Window.this.repaint();
-					}
-				}
+			public void actionPerformed(ActionEvent arg0) {
+				Window.this.game.computerTurn();
+				Window.this.passButton.setEnabled(false);
 			}
 		});
+		passButton.setEnabled(false);
+		add(passButton);
 		pack();
 		setVisible(true);
 	}
 
-	public Window() {
-		this(new Board());
-	}
-
 	public static void main(String[] args) {
-		Parser p = new Parser(new File("./boards/lala.txt"));
-		Board b;
-		try {
-			b = p.parseFile();
-		} catch (Exception e) {
-			throw new RuntimeException("Invalid File");
-		}
-		b = new Board();
-		new Window(b);
+		new Window();
 	}
 }
