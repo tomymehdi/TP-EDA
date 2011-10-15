@@ -89,13 +89,7 @@ public abstract class Node{
 
 	public void setChilds(){
 		int myRow, myCol;
-		Tile tile;
-		boolean IAmMini = this instanceof MiniNode;
-		if(IAmMini){
-			tile=Tile.PLAYER2;
-		}else{
-			tile=Tile.PLAYER1;
-		}
+		Tile tile= getOpositeTile();
 		for (int row = 0; row < Board.SIZE; row++) {
 			for (int col = 0; col < Board.SIZE; col++) {
 				if (board.getTile(row, col) == tile) {
@@ -105,7 +99,7 @@ public abstract class Node{
 						if (!(myRow < 0 || myCol < 0 || myRow >= Board.SIZE || myCol >= Board.SIZE)
 								&& board.getTile(myRow, myCol) == Tile.EMPTY) {
 							if (board.possibleChange(myRow, myCol, tile.getOpposite(), dir.getOpposite())) {
-								if(IAmMini){
+								if(tile==Tile.PLAYER2){
 									childs.add(new MaxNode(board.putTile(myRow, myCol, Tile.PLAYER1), new Position(myRow, myCol)));									
 								}else{
 									childs.add(new MiniNode(board.putTile(myRow, myCol, Tile.PLAYER2), new Position(myRow, myCol)));									
@@ -122,4 +116,5 @@ public abstract class Node{
 	public abstract boolean chooseMove(int val);
 	public abstract boolean pruneBranch(int val);
 	public abstract String getDOTFormat();
+	public abstract Tile getOpositeTile();
 }

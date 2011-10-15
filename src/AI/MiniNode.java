@@ -2,6 +2,7 @@ package AI;
 
 import game.Board;
 import game.Position;
+import game.Tile;
 
 
 public class MiniNode extends Node{
@@ -25,5 +26,10 @@ public class MiniNode extends Node{
 	@Override
 	public String getDOTFormat() {
 		return "";
+	}
+	
+	@Override
+	public Tile getOpositeTile(){
+		return Tile.PLAYER2;
 	}
 }

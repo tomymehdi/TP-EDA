@@ -2,6 +2,7 @@ package AI;
 
 import game.Board;
 import game.Position;
+import game.Tile;
 
 
 public class MaxNode extends Node{
@@ -25,5 +26,9 @@ public class MaxNode extends Node{
 	@Override
 	public String getDOTFormat() {
 		return "shape=box,";
+	}
+	@Override
+	public Tile getOpositeTile(){
+		return Tile.PLAYER1;
 	}
 }
