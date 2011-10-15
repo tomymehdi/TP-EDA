@@ -20,7 +20,7 @@ public class Main {
 			try{
 				BoardParser boardParser = new BoardParser(argParser.getFile());
 				Board board= boardParser.parseFile();
-				MiniMaxTree tree= new MiniMaxTree(argParser.getLevel(), board, argParser.isPruned(), argParser.isDOT());
+				MiniMaxTree tree= new MiniMaxTree(argParser.getLevel(), board, argParser.isPruned(), argParser.isTimed(), argParser.isDOT());
 				Position pos =tree.getNextMove();
 				System.out.println(pos.toString());
 			}catch(Exception e){

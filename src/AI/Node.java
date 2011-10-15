@@ -39,21 +39,27 @@ public abstract class Node{
 	}
 
 
-
-	public Position nextMove(int maxLevel, int level, boolean prune, int rootVal){
-		if(maxLevel==level){
+	//*TODO timee!!
+	public Position nextMove(int maxLevel, long limit, boolean prune, boolean timed, Integer parentVal){
+		long time= System.currentTimeMillis();
+		if((!timed && maxLevel==limit) || (timed && limit<=0)){
 			getHeuristicalValue();
 			return pos;
 		}
 		Position nextPos=pos;
 		setChilds();
+		if(timed){
+			limit=time-System.currentTimeMillis();
+		}else{
+			limit++;
+		}
 		for(Node child:childs){
-			child.nextMove(maxLevel, level+1, prune, value);
-			if(prune && pruneBranch(rootVal)){
+			if(prune && pruneBranch(parentVal)){
 				child.pruned=true;
 				return null;
 			}
 			if(child.chooseMove(value)){
+			child.nextMove(maxLevel, limit, prune, timed, value);
 				nextPos=child.pos;
 				value=child.value;
 			}
@@ -62,7 +68,7 @@ public abstract class Node{
 	}
 	public int toDOT(FileWriter fr, boolean red, int i) throws IOException{
 
-		String s, p;
+		String s, p, v;
 		int me = i,aux;
 		if(red){
 			s="color=red, style=filled, ";
@@ -71,8 +77,13 @@ public abstract class Node{
 		}else{
 			s="";
 		}
+		if(value==Integer.MAX_VALUE||value==Integer.MIN_VALUE){
+			v="";
+		}else{
+			v=""+value;
+		}
 		p=getDOTFormat();
-		fr.append(me + " ["+s+p+"label=\""+pos.toString() + " " + value +"\"];\n");
+		fr.append(me + " ["+s+p+"label=\""+pos.toString() + " " + v +"\"];\n");
 		boolean flag;
 		for(Node son: childs){
 			if(son.value==value){
@@ -114,7 +125,7 @@ public abstract class Node{
 	}
 	
 	public abstract boolean chooseMove(int val);
-	public abstract boolean pruneBranch(int val);
+	public abstract boolean pruneBranch(Integer val);
 	public abstract String getDOTFormat();
 	public abstract Tile getOpositeTile();
 }
