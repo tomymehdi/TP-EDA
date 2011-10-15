@@ -27,16 +27,15 @@ public class Board implements Cloneable {
 			{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,
 					Tile.EMPTY, Tile.EMPTY, Tile.EMPTY } };
 	public static final int SIZE = 8;
-	private Tile[][] field = new Tile[SIZE][SIZE];
+	private Tile[][] field;
 	private boolean playerTurn;
 
-	public Board() {
+	public Board(){
 		this(DEFAULT_FIELD);
 	}
-
+	
 	public Board(Tile[][] field) {
 		this.field = field;
-		this.playerTurn=true;
 	}
 
 	public Tile getTile(int row, int col) {
@@ -58,7 +57,7 @@ public class Board implements Cloneable {
 				}
 			}
 			if (count > 0) {
-				clone.playerTurn = !playerTurn;
+				clone.playerTurn=!playerTurn;
 				return clone;
 			}
 		}
@@ -166,10 +165,6 @@ public class Board implements Cloneable {
 		return playerTurn;
 	}
 
-	public void setPlayerTurn(boolean playerTurn) {
-		this.playerTurn = playerTurn;
-	}
-
 	public boolean playerHasMoves() {
 		int myRow, myCol, posibleMoves = 0;
 		for (int row = 0; row < Board.SIZE; row++) {
@@ -193,4 +188,5 @@ public class Board implements Cloneable {
 		System.out.println(posibleMoves);
 		return posibleMoves >= 1;
 	}
+
 }

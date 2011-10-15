@@ -11,14 +11,15 @@ public class MiniMaxTree {
 	private Node root;
 	int maxLevel;
 	boolean prune;
+	boolean DOT;
 
-	public MiniMaxTree(int level, Board board, boolean prune) {
+	public MiniMaxTree(int level, Board board, boolean prune, boolean DOT) {
 		this.maxLevel = level;
 		root = new MaxNode(board, null);
 		this.prune = prune;
 	}
 
-	public Position getNextMove(boolean DOT) {
+	public Position getNextMove() {
 
 		Position pos = root.nextMove(maxLevel, 0, prune, Integer.MIN_VALUE);
 		if (pos != null) {
@@ -57,7 +58,7 @@ public class MiniMaxTree {
 	}
 
 	public static void main(String[] args) {
-		MiniMaxTree t = new MiniMaxTree(6, new Board(), false);
-		t.getNextMove(true);
+		MiniMaxTree t = new MiniMaxTree(4, new Board(), false, true);
+		t.getNextMove();
 	}
 }
