@@ -14,8 +14,6 @@ public class Reversi {
 	private boolean playerCanMove=true;
 	private int level;
 	
-	
-	
 	public Reversi(GameListener listener,int level, boolean pruned, boolean timed){
 		this.listener=listener;
 		this.board=new Board();

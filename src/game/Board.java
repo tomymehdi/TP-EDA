@@ -185,7 +185,6 @@ public class Board implements Cloneable {
 				}
 			}
 		}
-		System.out.println(posibleMoves);
 		return posibleMoves >= 1;
 	}
 
