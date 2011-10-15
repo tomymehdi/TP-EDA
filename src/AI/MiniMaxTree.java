@@ -2,19 +2,27 @@ package AI;
 
 import game.Board;
 import game.Position;
+import game.Tile;
 
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class MiniMaxTree {
 //*TODO ASK ANDI
+	public static int CPUTURN=2, PLAYERTURN=1;
 	private Node root;
-	int maxLevel;
+	int limit;
 	boolean prune, timed, DOT;
 
-	public MiniMaxTree(int level, Board board, boolean prune, boolean timed, boolean DOT) {
-		this.maxLevel = level;
-		root = new MaxNode(board, null);
+	public MiniMaxTree(int limit, Board board, boolean prune, boolean timed, boolean DOT, int startingPlayer) {
+		this.limit = limit;
+		Tile tile;
+		if(startingPlayer==PLAYERTURN){
+			tile=Tile.PLAYER1;
+		}else{
+			tile=Tile.PLAYER2;
+		}
+		root = new MaxNode(board, null, tile);
 		this.prune = prune;
 		this.DOT=DOT;
 		this.timed=timed;
@@ -22,7 +30,7 @@ public class MiniMaxTree {
 
 	public Position getNextMove() {
 
-		Position pos = root.nextMove(maxLevel, 0, prune, timed, null);
+		Position pos = root.nextMove(limit, 0, prune, timed, null);
 		if (pos != null) {
 			if (DOT) {
 				generateDOT();
@@ -59,7 +67,15 @@ public class MiniMaxTree {
 	}
 
 	public static void main(String[] args) {
-		MiniMaxTree t = new MiniMaxTree(4, new Board(), true, false, true);
+//		Tile[][] tiles = {{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
+//	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.PLAYER1, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
+//	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.PLAYER1, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
+//	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.PLAYER1, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
+//	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.PLAYER1, Tile.PLAYER1,Tile.PLAYER2, Tile.EMPTY, Tile.EMPTY },
+//	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
+//	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
+//	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY } };
+		MiniMaxTree t = new MiniMaxTree(2, new Board(), true, false, true, CPUTURN);
 		t.getNextMove();
 	}
 }

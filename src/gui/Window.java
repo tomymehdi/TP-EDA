@@ -30,13 +30,13 @@ public class Window extends JFrame {
 				ImageFrame panel;
 				try {
 					if(score<0){
-						panel = new ImageFrame(ImageUtils.loadImage("./YOULOOSE.png"));
+						panel = new ImageFrame(ImageUtils.loadImage("./resources/YOULOOSE.png"));
 						panel.setPreferredSize(new Dimension(469,600));
 					}else if(score>0){
-						panel = new ImageFrame(ImageUtils.loadImage("./youWon.png"));
+						panel = new ImageFrame(ImageUtils.loadImage("./resources/youWon.png"));
 						panel.setPreferredSize(new Dimension(552,240));
 					}else{
-						panel = new ImageFrame(ImageUtils.loadImage("./drawgame.png"));
+						panel = new ImageFrame(ImageUtils.loadImage("./resources/drawgame.png"));
 						panel.setPreferredSize(new Dimension(425,352));
 					}
 					frame.getContentPane().add(panel, BorderLayout.CENTER);	
