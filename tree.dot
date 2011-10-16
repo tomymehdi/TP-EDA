@@ -1,0 +1,7 @@
+digraph {
+Root [shape=box, color=red, style=filled, label="START -4"];
+1 [color=red, style=filled, label="(4, 2) -4"];
+2 [color=red, style=filled, shape=box,label="(4, 6) -4"];
+1 -> 2;
+Root -> 1;
+}

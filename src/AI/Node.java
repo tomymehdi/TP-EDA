@@ -15,6 +15,7 @@ public abstract class Node{
 	Position pos;
 	int value;
 	boolean pruned;
+	Tile myTile;
 
 	public int getHeuristicalValue(){
 		int val=0;
@@ -100,21 +101,16 @@ public abstract class Node{
 
 	public void setChilds(){
 		int myRow, myCol;
-		Tile tile= getOpositeTile();
 		for (int row = 0; row < Board.SIZE; row++) {
 			for (int col = 0; col < Board.SIZE; col++) {
-				if (board.getTile(row, col) == tile) {
+				if (board.getTile(row, col) == myTile.getOpposite()) {
 					for (Direction dir : Direction.values()) {
 						myRow = row + dir.getRow();
 						myCol = col + dir.getCol();
 						if (!(myRow < 0 || myCol < 0 || myRow >= Board.SIZE || myCol >= Board.SIZE)
 								&& board.getTile(myRow, myCol) == Tile.EMPTY) {
-							if (board.possibleChange(myRow, myCol, tile.getOpposite(), dir.getOpposite())) {
-								if(tile==Tile.PLAYER2){
-									childs.add(new MaxNode(board.putTile(myRow, myCol, Tile.PLAYER1), new Position(myRow, myCol)));									
-								}else{
-									childs.add(new MiniNode(board.putTile(myRow, myCol, Tile.PLAYER2), new Position(myRow, myCol)));									
-								}
+							if (board.possibleChange(myRow, myCol, myTile, dir.getOpposite())) {
+								childs.add(getNewChild(board.putTile(myRow, myCol, myTile.getOpposite()), new Position(myRow, myCol), myTile.getOpposite()));
 							}
 
 						}
@@ -128,4 +124,5 @@ public abstract class Node{
 	public abstract boolean pruneBranch(Integer val);
 	public abstract String getDOTFormat();
 	public abstract Tile getOpositeTile();
+	public abstract Node getNewChild(Board board, Position pos, Tile tile);
 }

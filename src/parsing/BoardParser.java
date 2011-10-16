@@ -1,4 +1,4 @@
-package parser;
+package parsing;
 
 import game.Board;
 import game.Tile;

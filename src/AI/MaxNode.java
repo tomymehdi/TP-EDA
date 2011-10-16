@@ -7,10 +7,11 @@ import game.Tile;
 
 public class MaxNode extends Node{
 
-	public MaxNode(Board board, Position pos){
+	public MaxNode(Board board, Position pos, Tile tile){
 		super.board=board;
 		value=Integer.MIN_VALUE;
 		super.pos=pos;
+		myTile=tile;
 	}
 
 	@Override
@@ -33,5 +34,10 @@ public class MaxNode extends Node{
 	@Override
 	public Tile getOpositeTile(){
 		return Tile.PLAYER1;
+	}
+	
+	@Override
+	public Node getNewChild(Board board, Position pos, Tile tile) {
+		return new MiniNode(board, pos, tile);
 	}
 }

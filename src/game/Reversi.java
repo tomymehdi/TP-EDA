@@ -3,7 +3,7 @@ package game;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-import parser.BoardParser;
+import parsing.BoardParser;
 
 import AI.MiniMaxTree;
 
@@ -41,7 +41,7 @@ public class Reversi {
 	}
 	
 	public void computerTurn() {
-		MiniMaxTree tree = new MiniMaxTree(level, board, pruned, timed, false);
+		MiniMaxTree tree = new MiniMaxTree(level, board, pruned, timed, false, MiniMaxTree.CPUTURN);
 		Position pos = tree.getNextMove();
 		boolean cpuCanMove=false;
 		if (pos != null) {
