@@ -80,12 +80,7 @@ public class Reversi {
 	}
 	
 	public void newGame(){
-		Tile[][] field={{Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY},
-						{Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY},
-						{Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.EMPTY},
-						{Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.PLAYER1,Tile.PLAYER1},
-						{Tile.EMPTY,Tile.EMPTY,Tile.EMPTY,Tile.PLAYER1,Tile.PLAYER2}};
-		board=new Board(field);
+		board=new Board();
 		playerTurn=true;
 		playerCanMove=true;
 	}

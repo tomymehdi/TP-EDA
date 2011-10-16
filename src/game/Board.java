@@ -26,7 +26,7 @@ public class Board implements Cloneable {
 					Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
 			{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,
 					Tile.EMPTY, Tile.EMPTY, Tile.EMPTY } };
-	public static final int SIZE = 5;
+	public static final int SIZE = 8;
 	private Tile[][] field;
 
 	public Board(){
@@ -179,7 +179,6 @@ public class Board implements Cloneable {
 				}
 			}
 		}
-		System.out.println(possibleMoves);
 		return possibleMoves >= 1;
 	}
 
