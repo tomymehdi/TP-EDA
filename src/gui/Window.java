@@ -85,6 +85,7 @@ public class Window extends JFrame {
 		});
 		//passButton.setEnabled(false);
 		add(passButton);
+		passButton.setEnabled(false);
 		pack();
 		setVisible(true);
 	}
