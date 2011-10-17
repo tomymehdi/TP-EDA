@@ -85,15 +85,16 @@ public abstract class Node{
 		}
 		p=getDOTFormat();
 		fr.append(me + " ["+s+p+"label=\""+pos.toString() + " " + v +"\"];\n");
-		boolean flag;
+		boolean redSon, selected=true;
 		for(Node son: childs){
-			if(son.value==value){
-				flag=true;
+			if(selected &&son.value==value){
+				selected=false;
+				redSon=true;
 			}else{
-				flag=false;
+				redSon=false;
 			}
 			aux=i+1;
-			i=son.toDOT(fr, flag, ++i); 
+			i=son.toDOT(fr, redSon, ++i); 
 			fr.append(me +" -> " + aux +";\n");
 		}
 		return i;

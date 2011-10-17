@@ -47,15 +47,16 @@ public class MiniMaxTree {
 			fr.append("digraph {\n");
 			fr.append("Root [shape=box, color=red, style=filled, label=\"START "
 					+ root.value + "\"];\n");
-			boolean b;
+			boolean selected=true, red;
 			for (Node son : root.childs) {
-				if (root.value == son.value) {
-					b = true;
+				if (selected&&root.value == son.value) {
+					selected=false;
+					red = true;
 				} else {
-					b = false;
+					red = false;
 				}
 				aux = i + 1;
-				i = son.toDOT(fr, b, ++i);
+				i = son.toDOT(fr, red, ++i);
 				fr.append("Root -> " + aux + ";\n");
 			}
 
@@ -75,7 +76,7 @@ public class MiniMaxTree {
 //	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
 //	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
 //	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY } };
-		MiniMaxTree t = new MiniMaxTree(2, new Board(), true, false, true, CPUTURN);
+		MiniMaxTree t = new MiniMaxTree(5, new Board(), true, false, true, CPUTURN);
 		t.getNextMove();
 	}
 }
