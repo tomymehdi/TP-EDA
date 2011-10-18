@@ -47,7 +47,8 @@ public class Window extends JFrame {
 				} catch (IOException e) {
 					JOptionPane.showMessageDialog(Window.this, "There's has been an error while loading the images");
 				}
-				passButton.setEnabled(false);
+				Window.this.passButton.setEnabled(false);
+				Window.this.repaint();
 			}
 			
 			public void enablePass() {

@@ -14,6 +14,8 @@ public class MiniMaxTree {
 	private Node root;
 	private int limit;
 	private boolean prune, timed, DOT;
+	Tile tile;
+	Board board;
 
 	public MiniMaxTree(int limit, Board board, boolean prune, boolean timed, boolean DOT, int startingPlayer) {
 		if(timed){
@@ -21,13 +23,12 @@ public class MiniMaxTree {
 		}else{
 			this.limit=limit;
 		}
-		Tile tile;
 		if(startingPlayer==PLAYERTURN){
 			tile=Tile.PLAYER1;
 		}else{
 			tile=Tile.PLAYER2;
 		}
-		root = new MaxNode(board, null, tile);
+		this.board=board;
 		this.prune = prune;
 		this.DOT=DOT;
 		this.timed=timed;
@@ -47,17 +48,22 @@ public class MiniMaxTree {
 	}
 	
 	private Position getNextMoveByLevel(int limit){
-		return root.nextMove(limit, 0, prune, null);
+		root = new MaxNode(board, null, tile);
+		Position ans=root.nextMove(limit, 0, prune, null);
+		return ans;
 	}
 	
 	private Position getNextMoveByTime(){
 		long initTime= System.currentTimeMillis();
 		Position pos=null;
 		int level=1;
-		while(System.currentTimeMillis()-initTime<=limit){
+		long elapsedTime;
+		while( (elapsedTime=System.currentTimeMillis()-initTime) <=limit){
 			pos=getNextMoveByLevel(level);
+			System.out.println("Time: "+elapsedTime +" Level: "+ level);
 			level++;
 		}
+		System.out.println("Total time: "+elapsedTime);
 		return pos;
 	}
 
@@ -99,7 +105,7 @@ public class MiniMaxTree {
 //	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
 //	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
 //	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY } };
-		MiniMaxTree t = new MiniMaxTree(1, new Board(FieldFactory.DEFAULT_FIELD), true, true,true, CPUTURN);
+		MiniMaxTree t = new MiniMaxTree(8, new Board(FieldFactory.DEFAULT_FIELD), true, true,false, CPUTURN);
 		t.getNextMove();
 	}
 }

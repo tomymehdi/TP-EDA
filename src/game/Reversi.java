@@ -50,16 +50,13 @@ public class Reversi {
 			tileCount++;
 			cpuCanMove=true;
 		}
-		else{
-			if(!playerCanMove){
-				endOfGame();
-				return;
-			}
-		}
-		playerTurn=true;
-		if(tileCount>=Board.SIZE*Board.SIZE){
+		
+		if(!cpuCanMove&&!playerCanMove || tileCount>=Board.SIZE*Board.SIZE){
 			endOfGame();
+			return;
 		}
+		
+		playerTurn=true;
 		playerCanMove=board.playerHasMoves();
 		if(!playerCanMove){
 			if(cpuCanMove){
