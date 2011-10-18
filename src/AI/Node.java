@@ -41,26 +41,22 @@ public abstract class Node{
 
 
 	//*TODO timee!!
-	public Position nextMove(int maxLevel, long limit, boolean prune, boolean timed, Integer parentVal){
+	public Position nextMove(int maxLevel, long limit, boolean prune, Integer parentVal){
 		long time= System.currentTimeMillis();
-		if((!timed && maxLevel==limit) || (timed && limit<=0)){
+		if(maxLevel==limit){
 			getHeuristicalValue();
 			return pos;
 		}
 		Position nextPos=pos;
 		setChilds();
-		if(timed){
-			limit=time-System.currentTimeMillis();
-		}else{
-			limit++;
-		}
+		limit++;
 		for(Node child:childs){
 			if(prune && pruneBranch(parentVal)){
 				child.pruned=true;
 				return null;
 			}
 			if(child.chooseMove(value)){
-			child.nextMove(maxLevel, limit, prune, timed, value);
+			child.nextMove(maxLevel, limit, prune, value);
 				nextPos=child.pos;
 				value=child.value;
 			}

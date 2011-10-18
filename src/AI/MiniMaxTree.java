@@ -12,11 +12,15 @@ public class MiniMaxTree {
 //*TODO ASK ANDI
 	public static int CPUTURN=2, PLAYERTURN=1;
 	private Node root;
-	int limit;
-	boolean prune, timed, DOT;
+	private int limit;
+	private boolean prune, timed, DOT;
 
 	public MiniMaxTree(int limit, Board board, boolean prune, boolean timed, boolean DOT, int startingPlayer) {
-		this.limit = limit;
+		if(timed){
+			this.limit = limit*1000;
+		}else{
+			this.limit=limit;
+		}
 		Tile tile;
 		if(startingPlayer==PLAYERTURN){
 			tile=Tile.PLAYER1;
@@ -28,20 +32,36 @@ public class MiniMaxTree {
 		this.DOT=DOT;
 		this.timed=timed;
 	}
-
-	public Position getNextMove() {
-
-		Position pos = root.nextMove(limit, 0, prune, timed, null);
-		if (pos != null) {
-			if (DOT) {
-				generateDOT();
-			}
-			return pos;
+	
+	public Position getNextMove(){
+		Position pos;
+		if(timed){
+			pos= getNextMoveByTime();
+		}else{
+			pos=getNextMoveByLevel(limit);
 		}
-		return null;
+		if(DOT){
+			generateDOT();
+		}
+		return pos;
+	}
+	
+	private Position getNextMoveByLevel(int limit){
+		return root.nextMove(limit, 0, prune, null);
+	}
+	
+	private Position getNextMoveByTime(){
+		long initTime= System.currentTimeMillis();
+		Position pos=null;
+		int level=1;
+		while(System.currentTimeMillis()-initTime<=limit){
+			pos=getNextMoveByLevel(level);
+			level++;
+		}
+		return pos;
 	}
 
-	private void generateDOT() {
+	public void generateDOT() {
 		try {
 			int i = 0, aux;
 			FileWriter fr = new FileWriter("./tree.dot");
@@ -67,7 +87,9 @@ public class MiniMaxTree {
 			throw new RuntimeException();
 		}
 	}
-
+	
+	
+	
 	public static void main(String[] args) {
 //		Tile[][] tiles = {{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
 //	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.PLAYER1, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
@@ -77,7 +99,7 @@ public class MiniMaxTree {
 //	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
 //	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
 //	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY } };
-		MiniMaxTree t = new MiniMaxTree(5, new Board(FieldFactory.DEFAULT_FIELD), true, false, true, CPUTURN);
+		MiniMaxTree t = new MiniMaxTree(1, new Board(FieldFactory.DEFAULT_FIELD), true, true,true, CPUTURN);
 		t.getNextMove();
 	}
 }
