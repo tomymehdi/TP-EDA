@@ -1,6 +1,7 @@
 package AI;
 
 import game.Board;
+import game.FieldFactory;
 import game.Position;
 import game.Tile;
 
@@ -76,7 +77,7 @@ public class MiniMaxTree {
 //	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
 //	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
 //	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY } };
-		MiniMaxTree t = new MiniMaxTree(5, new Board(), true, false, true, CPUTURN);
+		MiniMaxTree t = new MiniMaxTree(5, new Board(FieldFactory.DEFAULT_FIELD), true, false, true, CPUTURN);
 		t.getNextMove();
 	}
 }

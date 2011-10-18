@@ -14,6 +14,7 @@ public class Reversi {
 	private boolean playerCanMove;
 	private int level;
 	private boolean playerTurn;
+	private int tileCount;
 	
 	public Reversi(GameListener listener,int level, boolean pruned, boolean timed){
 		this.listener=listener;
@@ -46,9 +47,19 @@ public class Reversi {
 		boolean cpuCanMove=false;
 		if (pos != null) {
 			board=board.putTile(pos.getRow(), pos.getCol(), Tile.PLAYER2);
+			tileCount++;
 			cpuCanMove=true;
 		}
+		else{
+			if(!playerCanMove){
+				endOfGame();
+				return;
+			}
+		}
 		playerTurn=true;
+		if(tileCount>=Board.SIZE*Board.SIZE){
+			endOfGame();
+		}
 		playerCanMove=board.playerHasMoves();
 		if(!playerCanMove){
 			if(cpuCanMove){
@@ -57,7 +68,6 @@ public class Reversi {
 			else{
 				endOfGame();
 			}
-			
 		}
 	}
 	
@@ -68,6 +78,7 @@ public class Reversi {
 					//Toco un lugar incorrecto
 					return false;
 				}
+				tileCount++;
 				board=auxBoard;
 				playerTurn=false;
 				return true;
@@ -80,7 +91,8 @@ public class Reversi {
 	}
 	
 	public void newGame(){
-		board=new Board();
+		board=new Board(FieldFactory.DEFAULT_FIELD);
+		tileCount=4;
 		playerTurn=true;
 		playerCanMove=true;
 	}
