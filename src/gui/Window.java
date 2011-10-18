@@ -1,6 +1,7 @@
 package gui;
 
 import game.GameListener;
+import game.Menu;
 import game.Reversi;
 
 import java.awt.BorderLayout;
@@ -22,6 +23,7 @@ public class Window extends JFrame {
 	Reversi game;
 	JButton passButton;
 	JButton newGameButton;
+	Menu menu;
 
 	public Window(int level, boolean pruned, boolean timed){
 		GameListener listener=new GameListener(){
@@ -61,18 +63,21 @@ public class Window extends JFrame {
 		
 		//Swing
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setLayout(new FlowLayout());
+		setLayout(new BorderLayout());
 		
-		newGameButton=new JButton("New Game");
-		newGameButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				Window.this.game.newGame();
-				repaint();
-			}
-		});
-		add(newGameButton);
+//		newGameButton=new JButton("New Game");
+//		newGameButton.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				Window.this.game.newGame();
+//				repaint();
+//			}
+//		});
+//		add(newGameButton);
 		
+		menu = new Menu(this);
+		menu.setVisible(true);
+		add(menu);
 		gPanel = new GamePanel(game);
 		add(gPanel);
 		
@@ -90,6 +95,10 @@ public class Window extends JFrame {
 		passButton.setEnabled(false);
 		pack();
 		setVisible(true);
+	}
+	
+	public Reversi getGame() {
+		return game;
 	}
 
 }

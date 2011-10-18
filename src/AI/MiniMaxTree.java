@@ -60,7 +60,7 @@ public class MiniMaxTree {
 		long elapsedTime;
 		while( (elapsedTime=System.currentTimeMillis()-initTime) <=limit){
 			pos=getNextMoveByLevel(level);
-			System.out.println("Time: "+elapsedTime +" Level: "+ level);
+			//System.out.println("Time: "+elapsedTime +" Level: "+ level);
 			level++;
 		}
 		System.out.println("Total time: "+elapsedTime);
@@ -105,7 +105,7 @@ public class MiniMaxTree {
 //	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
 //	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
 //	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY } };
-		MiniMaxTree t = new MiniMaxTree(8, new Board(FieldFactory.DEFAULT_FIELD), true, true,false, CPUTURN);
+		MiniMaxTree t = new MiniMaxTree(3, new Board(FieldFactory.DEFAULT_FIELD), true, false,true, CPUTURN);
 		t.getNextMove();
 	}
 }
