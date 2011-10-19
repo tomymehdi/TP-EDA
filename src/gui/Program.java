@@ -1,14 +1,15 @@
-package game;
+package gui;
 import java.io.IOException;
 
-import gui.Window;
+import game.Board;
+import game.Position;
 import parsing.ArgumentParsing;
 import parsing.BoardParser;
 import parsing.ParsingException;
 import AI.MiniMaxTree;
 
 
-public class Main {
+public class Program {
 	public static void main(String[] args) {
 		try{
 			ArgumentParsing argParser = new ArgumentParsing(args);

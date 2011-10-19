@@ -7,7 +7,7 @@
 	<target name="dist" depends="compile">
 		<jar destfile="Reversi.jar" basedir="bin">
 			<manifest>
-				<attribute name="Main-Class" value="game.Main"/>
+				<attribute name="Main-Class" value="gui.Program"/>
 			</manifest>
 		</jar>
 	</target>
