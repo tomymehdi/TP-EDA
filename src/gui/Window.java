@@ -65,19 +65,10 @@ public class Window extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
 		
-//		newGameButton=new JButton("New Game");
-//		newGameButton.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent arg0) {
-//				Window.this.game.newGame();
-//				repaint();
-//			}
-//		});
-//		add(newGameButton);
-		
+
 		menu = new Menu(this);
 		add(menu, BorderLayout.NORTH);
-		gPanel = new GamePanel(game);
+		gPanel = new GamePanel(game, this);
 		add(gPanel, BorderLayout.CENTER);
 		
 		passButton=new JButton("pass");

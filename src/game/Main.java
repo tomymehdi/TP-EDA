@@ -28,7 +28,7 @@ public class Main {
 				}
 			}
 		}catch(ParsingException p){
-			System.out.println("There has been a parsing exception");
+			System.out.println("An error has ocurred");
 		}catch(IOException e){
 			System.out.println("There has been an error while opening a file");
 		}
