@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 public class Menu extends JMenuBar{
 	
@@ -34,7 +35,20 @@ public class Menu extends JMenuBar{
 			
 			
 		});
+		JMenuItem howToPlay = new JMenuItem("How to play");
+		howToPlay.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(Menu.this.window.getContentPane(), "You can put a chip only next to a chip that belongs to the other player\n" +
+						" and if you can get one or more of the other player's chips between a chip\n of yours and the currently added.\n " +
+						"Then, all the chips that are between now are yours.\n\n " +
+						"The winner is the player that has more chips at the end of the game");
+				
+			}
+		});
 		file.add(newGame);
+		file.add(howToPlay);
 		add(file);
 	}
 }
