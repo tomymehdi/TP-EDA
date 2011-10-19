@@ -127,21 +127,4 @@ public class ArgumentParsing {
 	public boolean isVisual() {
 		return isVisual;
 	}
-	
-	
-	
-//	private void print(){
-//		System.out.println("visual " + isVisual +"\ntiempo " + timed + "\npoda " + pruned + "\ndot " + DOT +"\nnivel " + level);
-//		if(!isVisual){
-//			System.out.println("\nempieza " + player + "\narchivo " + fileName);
-//		}
-//	}
-//	
-//	public static void main(String[] args) {
-//		String[] s={"-visual",  "2", "-depth", "6", };
-//		ArgumentParsing p=new ArgumentParsing(s);
-//		p.parse();
-//		p.print();
-//	}
-
 }

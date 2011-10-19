@@ -80,7 +80,6 @@ public class Window extends JFrame {
 				repaint();
 			}
 		});
-		//passButton.setEnabled(false);
 		add(passButton, BorderLayout.EAST);
 		passButton.setEnabled(false);
 		pack();

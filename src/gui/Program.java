@@ -23,7 +23,7 @@ public class Program {
 						argParser.isDOT(), argParser.getStartingPlayer());
 				Position pos=tree.getNextMove();
 				if(pos==null){
-					System.out.println("Computer cant make a move");
+					System.out.println("PASS");
 				}else{
 					System.out.println(pos.toString());
 				}

@@ -1,7 +1,6 @@
 package AI;
 
 import game.Board;
-import game.FieldFactory;
 import game.Position;
 import game.Tile;
 
@@ -61,7 +60,6 @@ public class MiniMaxTree {
 			while(true){
 				calculatedPos=tryingPos;
 				tryingPos=getNextMoveByLevel(level, timeInfo);
-				//System.out.println("Time: "+elapsedTime +" Level: "+ level);
 				level++;				
 			}
 			
@@ -95,20 +93,5 @@ public class MiniMaxTree {
 		} catch (IOException e) {
 			throw new RuntimeException();
 		}
-	}
-	
-	
-	
-	public static void main(String[] args) {
-//		Tile[][] tiles = {{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
-//	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.PLAYER1, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
-//	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.PLAYER1, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
-//	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.PLAYER1, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
-//	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.PLAYER1, Tile.PLAYER1,Tile.PLAYER2, Tile.EMPTY, Tile.EMPTY },
-//	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
-//	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
-//	{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,Tile.EMPTY, Tile.EMPTY, Tile.EMPTY } };
-		MiniMaxTree t = new MiniMaxTree(5, new Board(FieldFactory.DEFAULT_FIELD), true, false,true, CPUTURN);
-		t.getNextMove();
 	}
 }

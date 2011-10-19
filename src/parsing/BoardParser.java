@@ -40,8 +40,7 @@ public class BoardParser {
 					matrix[i][j]=Tile.PLAYER2;
 					break;
 				default:
-					System.out.println("Invalid board");
-					return null;
+					throw new ParsingException();
 				}
 			}
 			i++;

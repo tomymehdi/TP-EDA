@@ -84,7 +84,7 @@ public class Reversi {
 	}
 	
 	public void newGame(){
-		board=new Board(FieldFactory.DEFAULT_FIELD);
+		board=new Board(Board.DEFAULT_FIELD);
 		tileCount=4;
 		playerTurn=true;
 		playerCanMove=true;
