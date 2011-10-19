@@ -1,27 +1,29 @@
 package gui;
 
 import game.GameListener;
+import game.Menu;
 import game.Reversi;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 public class Window extends JFrame {
 	
-	GamePanel gPanel;
-	Reversi game;
-	JButton passButton;
-	JButton newGameButton;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private GamePanel gPanel;
+	private Reversi game;
+	private JButton passButton;
+	private Menu menu;
 
 	public Window(int level, boolean pruned, boolean timed){
 		GameListener listener=new GameListener(){
@@ -47,6 +49,8 @@ public class Window extends JFrame {
 				} catch (IOException e) {
 					JOptionPane.showMessageDialog(Window.this, "There's has been an error while loading the images");
 				}
+				Window.this.passButton.setEnabled(false);
+				Window.this.repaint();
 			}
 			
 			public void enablePass() {
@@ -59,20 +63,22 @@ public class Window extends JFrame {
 		
 		//Swing
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setLayout(new FlowLayout());
+		setLayout(new BorderLayout());
 		
-		newGameButton=new JButton("New Game");
-		newGameButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				Window.this.game.newGame();
-				repaint();
-			}
-		});
-		add(newGameButton);
+//		newGameButton=new JButton("New Game");
+//		newGameButton.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				Window.this.game.newGame();
+//				repaint();
+//			}
+//		});
+//		add(newGameButton);
 		
+		menu = new Menu(this);
+		add(menu, BorderLayout.NORTH);
 		gPanel = new GamePanel(game);
-		add(gPanel);
+		add(gPanel, BorderLayout.CENTER);
 		
 		passButton=new JButton("pass");
 		passButton.addActionListener(new ActionListener() {
@@ -84,10 +90,14 @@ public class Window extends JFrame {
 			}
 		});
 		//passButton.setEnabled(false);
-		add(passButton);
+		add(passButton, BorderLayout.EAST);
 		passButton.setEnabled(false);
 		pack();
 		setVisible(true);
+	}
+	
+	public Reversi getGame() {
+		return game;
 	}
 
 }

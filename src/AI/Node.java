@@ -10,57 +10,64 @@ import java.util.List;
 
 public abstract class Node{
 
+	private final static int[][] HEURISTICAL_VALUES= 
+		{{99,-8,8,6,6,8,-8,99},
+		{-8,-24,-4,-3,-3,-4,-24,-8},
+		{8,-4,7,4,4,7,-4,8},
+		{6,-3,4,0,0,4,-3,6},
+		{6,-3,4,0,0,4,-3,6},
+		{8,-4,7,4,4,7,-4,8},
+		{-8,-24,-4,-3,-3,-4,-24,-8},
+		{99,-8,8,6,6,8,-8,99}};
 	protected List<Node> childs=new LinkedList<Node>();
-	Board board;
-	Position pos;
-	int value;
-	boolean pruned;
-	Tile myTile;
+	protected Board board;
+	protected Position pos;
+	protected int value;
+	private boolean pruned;
+	protected Tile myTile;
 
 	public int getHeuristicalValue(){
 		int val=0;
-		for(Tile[] row: board.getField()){
-			for(Tile tile: row){
-				val+=getHeuristicalValue(tile);
+		for(int i=0; i<Board.SIZE; i++){
+			for(int j=0; j<Board.SIZE;j++){
+				val+=getHeuristicalValue(i,j);
 			}
 		}
 		value=val;
 		return val;
 	}
 
-	private int getHeuristicalValue(Tile tile){
+	private int getHeuristicalValue(int row, int col){
+		Tile tile = board.getTile(row, col);
 		switch(tile){
 		case PLAYER1:
-			return -1;
+			return -1*HEURISTICAL_VALUES[row][col];
 		case PLAYER2:
-			return 1;
+			return HEURISTICAL_VALUES[row][col];
 		default:
 			return 0;
 		}
 	}
 
 
-	//*TODO timee!!
-	public Position nextMove(int maxLevel, long limit, boolean prune, boolean timed, Integer parentVal){
-		long time= System.currentTimeMillis();
-		if((!timed && maxLevel==limit) || (timed && limit<=0)){
+	public Position nextMove(int maxLevel, long level, boolean prune, Integer parentVal, TimeInfo timeInfo){
+		if(timeInfo!=null){
+			timeInfo.update();
+		}
+		if(maxLevel==level){ 
 			getHeuristicalValue();
 			return pos;
 		}
 		Position nextPos=pos;
 		setChilds();
-		if(timed){
-			limit=time-System.currentTimeMillis();
-		}else{
-			limit++;
-		}
+		level++;
 		for(Node child:childs){
 			if(prune && pruneBranch(parentVal)){
 				child.pruned=true;
 				return null;
 			}
 			if(child.chooseMove(value)){
-			child.nextMove(maxLevel, limit, prune, timed, value);
+				child.nextMove(maxLevel, level, prune, value, timeInfo);
 				nextPos=child.pos;
 				value=child.value;
 			}
@@ -120,7 +127,7 @@ public abstract class Node{
 			}
 		}
 	}
-	
+
 	public abstract boolean chooseMove(int val);
 	public abstract boolean pruneBranch(Integer val);
 	public abstract String getDOTFormat();

@@ -1,37 +1,13 @@
 package game;
 
-import java.awt.event.ActionListener;
 import java.util.HashSet;
 import java.util.Set;
 
-import AI.MiniMaxTree;
-import AI.MiniNode;
 
 public class Board implements Cloneable {
 
-	public static final Tile[][] DEFAULT_FIELD = {
-			{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,
-					Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
-			{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,
-					Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
-			{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,
-					Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
-			{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.PLAYER1, Tile.PLAYER2,
-					Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
-			{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.PLAYER2, Tile.PLAYER1,
-					Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
-			{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,
-					Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
-			{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,
-					Tile.EMPTY, Tile.EMPTY, Tile.EMPTY },
-			{ Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY,
-					Tile.EMPTY, Tile.EMPTY, Tile.EMPTY } };
 	public static final int SIZE = 8;
 	private Tile[][] field;
-
-	public Board(){
-		this(DEFAULT_FIELD);
-	}
 	
 	public Board(Tile[][] field) {
 		this.field = field;

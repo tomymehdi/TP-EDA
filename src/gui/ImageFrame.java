@@ -6,7 +6,12 @@ import java.awt.Image;
 import javax.swing.JPanel;
 
 public class ImageFrame extends JPanel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Image Image;
+	
     public ImageFrame() {
     }
 
