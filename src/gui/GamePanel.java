@@ -7,10 +7,14 @@ import game.Tile;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 
 public class GamePanel extends JPanel {
 	
@@ -20,9 +24,21 @@ public class GamePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private Reversi game;
 	private static final int TILE_SIZE = 30;
+	private Image blackTile, whiteTile, boardIm;
+	private Window window;
 
-	public GamePanel(Reversi game) {
-		this.game= game;
+	public GamePanel(Reversi game, Window window) {
+		this.window=window;
+		try{
+			this.game= game;
+			blackTile= ImageUtils.loadImage("./resources/blacktile.png");
+			whiteTile=ImageUtils.loadImage("./resources/whitetile.png");
+			boardIm=ImageUtils.loadImage("./resources/board.png");
+		}catch(IOException e){
+			JOptionPane.showMessageDialog(window.getContentPane(), "An error has occurred while uploading the images");
+			System.exit(0);
+		}
+		
 		setPreferredSize(new Dimension(Board.SIZE * TILE_SIZE, Board.SIZE*TILE_SIZE));
 		setBackground(new Color(255,201,125));
 		addMouseListener(new MouseAdapter() {
@@ -48,14 +64,7 @@ public class GamePanel extends JPanel {
 
 	private void drawGrid(Graphics g) {
 		g.setColor(Color.GRAY);
-		for (int col = 0; col < Board.SIZE; col++) {
-			g.drawLine(col * TILE_SIZE, 0, col * TILE_SIZE, Board.SIZE
-					* TILE_SIZE);
-		}
-		for (int row = 0; row < Board.SIZE; row++) {
-			g.drawLine(0, row * TILE_SIZE, Board.SIZE * TILE_SIZE, row
-					* TILE_SIZE);
-		}
+		g.drawImage(boardIm,0,0,TILE_SIZE*Board.SIZE,TILE_SIZE*Board.SIZE, null);
 	}
 
 	private void drawTiles(Graphics g) {
@@ -64,13 +73,9 @@ public class GamePanel extends JPanel {
 			for (int col = 0; col < Board.SIZE; col++) {
 				Tile tile = board.getTile(row, col);
 				if (tile == Tile.PLAYER1) {
-					g.setColor(Color.BLACK);
-					g.fillOval(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE,
-							TILE_SIZE);
+					g.drawImage(whiteTile,col*TILE_SIZE,row*TILE_SIZE,TILE_SIZE,TILE_SIZE,null);
 				} else if (tile == Tile.PLAYER2) {
-					g.setColor(Color.WHITE);
-					g.fillOval(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE,
-							TILE_SIZE);
+					g.drawImage(blackTile,col*TILE_SIZE,row*TILE_SIZE,TILE_SIZE,TILE_SIZE,null);
 				}
 			}
 		}
