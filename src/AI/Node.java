@@ -23,7 +23,6 @@ public abstract class Node{
 	protected Board board;
 	protected Position pos;
 	protected int value;
-	private boolean pruned;
 	protected Tile myTile;
 
 	public int getHeuristicalValue(){
@@ -63,7 +62,6 @@ public abstract class Node{
 		level++;
 		for(Node child:childs){
 			if(prune && pruneBranch(parentVal)){
-				child.pruned=true;
 				return null;
 			}
 			if(child.chooseMove(value)){
@@ -74,24 +72,24 @@ public abstract class Node{
 		}
 		return nextPos;
 	}
-	public int toDOT(FileWriter fr, boolean red, int i) throws IOException{
+	public int toDOT(FileWriter fr, boolean redColored, int i) throws IOException{
 
-		String s, p, v;
+		String red, format, val, blue;
 		int me = i,aux;
-		if(red){
-			s="color=red, style=filled, ";
-		}else if(pruned){
-			s="color=blue, style=filled, ";
+		if(redColored){
+			red="color=red, style=filled, ";
 		}else{
-			s="";
+			red="";
 		}
 		if(value==Integer.MAX_VALUE||value==Integer.MIN_VALUE){
-			v="";
+			val="";
+			blue="color=blue, style=filled, ";
 		}else{
-			v=""+value;
+			val=""+value;
+			blue="";
 		}
-		p=getDOTFormat();
-		fr.append(me + " ["+s+p+"label=\""+pos.toString() + " " + v +"\"];\n");
+		format=getDOTFormat();
+		fr.append(me + " ["+red+blue+format+"label=\""+pos.toString() + " " + val +"\"];\n");
 		boolean redSon, selected=true;
 		for(Node son: childs){
 			if(selected &&son.value==value){
