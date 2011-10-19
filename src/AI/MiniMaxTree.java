@@ -9,7 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class MiniMaxTree {
-//*TODO ASK ANDI
+
 	public static int CPUTURN=2, PLAYERTURN=1;
 	private Node root;
 	private int limit;
@@ -39,7 +39,7 @@ public class MiniMaxTree {
 		if(timed){
 			pos= getNextMoveByTime();
 		}else{
-			pos=getNextMoveByLevel(limit);
+			pos=getNextMoveByLevel(limit, null);
 		}
 		if(DOT){
 			generateDOT();
@@ -47,24 +47,27 @@ public class MiniMaxTree {
 		return pos;
 	}
 	
-	private Position getNextMoveByLevel(int limit){
+	private Position getNextMoveByLevel(int limit, TimeInfo timeInfo){
 		root = new MaxNode(board, null, tile);
-		Position ans=root.nextMove(limit, 0, prune, null);
+		Position ans=root.nextMove(limit, 0, prune, null, timeInfo);
 		return ans;
 	}
 	
 	private Position getNextMoveByTime(){
-		long initTime= System.currentTimeMillis();
-		Position pos=null;
+		Position tryingPos=null, calculatedPos=null;
 		int level=1;
-		long elapsedTime;
-		while( (elapsedTime=System.currentTimeMillis()-initTime) <=limit){
-			pos=getNextMoveByLevel(level);
-			//System.out.println("Time: "+elapsedTime +" Level: "+ level);
-			level++;
+		TimeInfo timeInfo=new TimeInfo(limit);
+		try{
+			while(true){
+				calculatedPos=tryingPos;
+				tryingPos=getNextMoveByLevel(level, timeInfo);
+				//System.out.println("Time: "+elapsedTime +" Level: "+ level);
+				level++;				
+			}
+			
+		}catch(TimeFinishedException e){
+			return calculatedPos;
 		}
-		System.out.println("Total time: "+elapsedTime);
-		return pos;
 	}
 
 	public void generateDOT() {

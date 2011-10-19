@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public abstract class Node{
-	
+
 	private final static int[][] HEURISTICAL_VALUES= 
 		{{99,-8,8,6,6,8,-8,99},
 		{-8,-24,-4,-3,-3,-4,-24,-8},
@@ -50,21 +50,24 @@ public abstract class Node{
 	}
 
 
-	public Position nextMove(int maxLevel, long limit, boolean prune, Integer parentVal){
-		if(maxLevel==limit){
+	public Position nextMove(int maxLevel, long level, boolean prune, Integer parentVal, TimeInfo timeInfo){
+		if(timeInfo!=null){
+			timeInfo.update();
+		}
+		if(maxLevel==level){ 
 			getHeuristicalValue();
 			return pos;
 		}
 		Position nextPos=pos;
 		setChilds();
-		limit++;
+		level++;
 		for(Node child:childs){
 			if(prune && pruneBranch(parentVal)){
 				child.pruned=true;
 				return null;
 			}
 			if(child.chooseMove(value)){
-			child.nextMove(maxLevel, limit, prune, value);
+				child.nextMove(maxLevel, level, prune, value, timeInfo);
 				nextPos=child.pos;
 				value=child.value;
 			}
@@ -124,7 +127,7 @@ public abstract class Node{
 			}
 		}
 	}
-	
+
 	public abstract boolean chooseMove(int val);
 	public abstract boolean pruneBranch(Integer val);
 	public abstract String getDOTFormat();
