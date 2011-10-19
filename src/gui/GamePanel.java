@@ -24,7 +24,7 @@ public class GamePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private Reversi game;
 	private static final int TILE_SIZE = 30;
-	private Image blackTile, whiteTile;
+	private Image blackTile, whiteTile, boardIm;
 	private Window window;
 
 	public GamePanel(Reversi game, Window window) {
@@ -33,6 +33,7 @@ public class GamePanel extends JPanel {
 			this.game= game;
 			blackTile= ImageUtils.loadImage("./resources/blacktile.png");
 			whiteTile=ImageUtils.loadImage("./resources/whitetile.png");
+			boardIm=ImageUtils.loadImage("./resources/board.png");
 		}catch(IOException e){
 			JOptionPane.showMessageDialog(window.getContentPane(), "An error has occurred while uploading the images");
 			System.exit(0);
@@ -63,14 +64,7 @@ public class GamePanel extends JPanel {
 
 	private void drawGrid(Graphics g) {
 		g.setColor(Color.GRAY);
-		for (int col = 0; col < Board.SIZE; col++) {
-			g.drawLine(col * TILE_SIZE, 0, col * TILE_SIZE, Board.SIZE
-					* TILE_SIZE);
-		}
-		for (int row = 0; row < Board.SIZE; row++) {
-			g.drawLine(0, row * TILE_SIZE, Board.SIZE * TILE_SIZE, row
-					* TILE_SIZE);
-		}
+		g.drawImage(boardIm,0,0,TILE_SIZE*Board.SIZE,TILE_SIZE*Board.SIZE, null);
 	}
 
 	private void drawTiles(Graphics g) {
