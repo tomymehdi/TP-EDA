@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -45,8 +46,9 @@ public class GamePanel extends JPanel {
 				int row=m.getY()/TILE_SIZE;
 				int col=m.getX()/TILE_SIZE;
 				if(GamePanel.this.game.PlayerTurn(row, col)){
-					GamePanel.this.repaint();
+					GamePanel.this.paintImmediately(new Rectangle(new Dimension(Board.SIZE*TILE_SIZE,Board.SIZE*TILE_SIZE)));
 					GamePanel.this.game.computerTurn();
+					GamePanel.this.paintImmediately(new Rectangle(new Dimension(Board.SIZE*TILE_SIZE,Board.SIZE*TILE_SIZE)));
 					GamePanel.this.repaint();
 				}
 			}
