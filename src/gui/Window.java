@@ -62,10 +62,10 @@ public class Window extends JFrame {
 		
 		
 		//Swing
+		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
 		
-
 		menu = new Menu(this);
 		add(menu, BorderLayout.NORTH);
 		gPanel = new GamePanel(game, this);
