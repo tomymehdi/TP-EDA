@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 
 
 public class GamePanel extends JPanel {
-
+	
 	/**
 	 * 
 	 */
@@ -47,17 +47,17 @@ public class GamePanel extends JPanel {
 				int row=m.getY()/TILE_SIZE;
 				int col=m.getX()/TILE_SIZE;
 				if(GamePanel.this.game.PlayerTurn(row, col)){
-					repaint();
+					GamePanel.this.repaint();
 					GamePanel.this.game.computerTurn();
-					repaint();
+					GamePanel.this.repaint();
 				}
 			}
 		});
 	}
 
 	@Override
-	public void paint(Graphics g) {
-		super.paint(g);
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		drawGrid(g);
 		drawTiles(g);
 	}
