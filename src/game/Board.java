@@ -59,7 +59,19 @@ public class Board implements Cloneable {
 		}
 		return this;
 	}
-
+	
+	public int countTiles(Tile tile){
+		int count=0;
+		for(int row=0; row<Board.SIZE; row++){
+			for(int col=0; col<Board.SIZE; col++){
+				if(field[row][col]==tile){
+					count++;
+				}
+			}
+		}
+		return count;
+	}
+	
 	public Set<Position> getPossiblePositions(Tile tile) {
 		int actualRow, actualCol;
 		Set<Position> set = new HashSet<Position>();
