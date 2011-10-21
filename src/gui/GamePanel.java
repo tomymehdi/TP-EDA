@@ -24,7 +24,7 @@ public class GamePanel extends JPanel {
 	public GamePanel(Reversi game) {
 		this.game= game;
 		setPreferredSize(new Dimension(Board.SIZE * TILE_SIZE, Board.SIZE*TILE_SIZE));
-		setBackground(Color.WHITE);
+		setBackground(new Color(255,201,125));
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent m) {
@@ -47,7 +47,7 @@ public class GamePanel extends JPanel {
 	}
 
 	private void drawGrid(Graphics g) {
-		g.setColor(Color.LIGHT_GRAY);
+		g.setColor(Color.GRAY);
 		for (int col = 0; col < Board.SIZE; col++) {
 			g.drawLine(col * TILE_SIZE, 0, col * TILE_SIZE, Board.SIZE
 					* TILE_SIZE);
@@ -68,7 +68,7 @@ public class GamePanel extends JPanel {
 					g.fillOval(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE,
 							TILE_SIZE);
 				} else if (tile == Tile.PLAYER2) {
-					g.setColor(Color.LIGHT_GRAY);
+					g.setColor(Color.WHITE);
 					g.fillOval(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE,
 							TILE_SIZE);
 				}

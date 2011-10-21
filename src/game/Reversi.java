@@ -1,9 +1,5 @@
 package game;
 
-import java.awt.event.ActionListener;
-import java.io.File;
-
-import parsing.BoardParser;
 
 import AI.MiniMaxTree;
 

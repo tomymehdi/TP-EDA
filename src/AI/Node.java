@@ -9,40 +9,48 @@ import java.util.LinkedList;
 import java.util.List;
 
 public abstract class Node{
-
+	
+	private final static int[][] HEURISTICAL_VALUES= 
+		{{99,-8,8,6,6,8,-8,99},
+		{-8,-24,-4,-3,-3,-4,-24,-8},
+		{8,-4,7,4,4,7,-4,8},
+		{6,-3,4,0,0,4,-3,6},
+		{6,-3,4,0,0,4,-3,6},
+		{8,-4,7,4,4,7,-4,8},
+		{-8,-24,-4,-3,-3,-4,-24,-8},
+		{99,-8,8,6,6,8,-8,99}};
 	protected List<Node> childs=new LinkedList<Node>();
-	Board board;
-	Position pos;
-	int value;
-	boolean pruned;
-	Tile myTile;
+	protected Board board;
+	protected Position pos;
+	protected int value;
+	private boolean pruned;
+	protected Tile myTile;
 
 	public int getHeuristicalValue(){
 		int val=0;
-		for(Tile[] row: board.getField()){
-			for(Tile tile: row){
-				val+=getHeuristicalValue(tile);
+		for(int i=0; i<Board.SIZE; i++){
+			for(int j=0; j<Board.SIZE;j++){
+				val+=getHeuristicalValue(i,j);
 			}
 		}
 		value=val;
 		return val;
 	}
 
-	private int getHeuristicalValue(Tile tile){
+	private int getHeuristicalValue(int row, int col){
+		Tile tile = board.getTile(row, col);
 		switch(tile){
 		case PLAYER1:
-			return -1;
+			return -1*HEURISTICAL_VALUES[row][col];
 		case PLAYER2:
-			return 1;
+			return HEURISTICAL_VALUES[row][col];
 		default:
 			return 0;
 		}
 	}
 
 
-	//*TODO timee!!
 	public Position nextMove(int maxLevel, long limit, boolean prune, Integer parentVal){
-		long time= System.currentTimeMillis();
 		if(maxLevel==limit){
 			getHeuristicalValue();
 			return pos;

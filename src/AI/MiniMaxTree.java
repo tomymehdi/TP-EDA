@@ -14,8 +14,8 @@ public class MiniMaxTree {
 	private Node root;
 	private int limit;
 	private boolean prune, timed, DOT;
-	Tile tile;
-	Board board;
+	private Tile tile;
+	private Board board;
 
 	public MiniMaxTree(int limit, Board board, boolean prune, boolean timed, boolean DOT, int startingPlayer) {
 		if(timed){

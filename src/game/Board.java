@@ -1,11 +1,8 @@
 package game;
 
-import java.awt.event.ActionListener;
 import java.util.HashSet;
 import java.util.Set;
 
-import AI.MiniMaxTree;
-import AI.MiniNode;
 
 public class Board implements Cloneable {
 

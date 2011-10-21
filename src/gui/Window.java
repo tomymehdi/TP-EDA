@@ -6,24 +6,24 @@ import game.Reversi;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 public class Window extends JFrame {
 	
-	GamePanel gPanel;
-	Reversi game;
-	JButton passButton;
-	JButton newGameButton;
-	Menu menu;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private GamePanel gPanel;
+	private Reversi game;
+	private JButton passButton;
+	private Menu menu;
 
 	public Window(int level, boolean pruned, boolean timed){
 		GameListener listener=new GameListener(){
@@ -76,7 +76,6 @@ public class Window extends JFrame {
 //		add(newGameButton);
 		
 		menu = new Menu(this);
-		menu.setVisible(true);
 		add(menu, BorderLayout.NORTH);
 		gPanel = new GamePanel(game);
 		add(gPanel, BorderLayout.CENTER);
