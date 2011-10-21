@@ -77,9 +77,9 @@ public class Window extends JFrame {
 		
 		menu = new Menu(this);
 		menu.setVisible(true);
-		add(menu);
+		add(menu, BorderLayout.NORTH);
 		gPanel = new GamePanel(game);
-		add(gPanel);
+		add(gPanel, BorderLayout.CENTER);
 		
 		passButton=new JButton("pass");
 		passButton.addActionListener(new ActionListener() {
@@ -91,7 +91,7 @@ public class Window extends JFrame {
 			}
 		});
 		//passButton.setEnabled(false);
-		add(passButton);
+		add(passButton, BorderLayout.EAST);
 		passButton.setEnabled(false);
 		pack();
 		setVisible(true);
