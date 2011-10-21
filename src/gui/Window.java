@@ -1,7 +1,6 @@
 package gui;
 
 import game.GameListener;
-import game.Menu;
 import game.Reversi;
 
 import java.awt.BorderLayout;
