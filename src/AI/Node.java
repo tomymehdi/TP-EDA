@@ -47,24 +47,31 @@ public abstract class Node{
 			return 0;
 		}
 	}
-
+	
 	public int extraHV(){
 		int heurVal=board.getPossiblePositions(myTile).size()*3;
 		if(heurVal==0 && board.getPossiblePositions(myTile.getOpposite()).isEmpty()){
-			int myCount=board.cantTiles(myTile),otherCount=board.cantTiles(myTile.getOpposite());
+			int myCount=0,otherCount=0;
+			for(int row=0; row<Board.SIZE; row++){
+				for(int col=0; col<Board.SIZE; col++){
+					if(board.getField()[row][col]==myTile){
+						myCount++;
+					}
+					else if(board.getField()[row][col]==myTile.getOpposite()){
+						otherCount++;
+					}
+				}
+			}
 			if(myCount-otherCount<0){
 				return -10000;
 			}else if(myCount-otherCount>0){
 				return 10000;
 			}
 		}
-		heurVal+=board.cantTiles(myTile)+controlCorners(heurVal)+controlBorders(heurVal);
-		value=heurVal;
+		heurVal+=controlCorners(heurVal)+controlBorders(heurVal);
 		return heurVal;
 	}
-
-
-
+	
 	private int controlBorders(int hv){
 		int heurVal=hv;
 		for(int row=2;row<Board.SIZE-3; row++){
@@ -147,7 +154,7 @@ public abstract class Node{
 			timeInfo.update();
 		}
 		if(maxLevel==level){ 
-			extraHV();
+			getHeuristicalValue();
 			return pos;
 		}
 		Position nextPos=pos;
