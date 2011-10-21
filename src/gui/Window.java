@@ -30,6 +30,7 @@ public class Window extends JFrame {
 	private JPanel container;
 
 	public Window(int level, boolean pruned, boolean timed){
+		super("REVERSI");
 		GameListener listener=new GameListener(){
 			public void endOfGame(int score) {
 				JFrame frame = new JFrame("Game Over");
