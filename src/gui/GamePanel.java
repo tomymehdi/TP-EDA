@@ -8,11 +8,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -26,15 +26,17 @@ public class GamePanel extends JPanel {
 	private Reversi game;
 	private static final int TILE_SIZE = 30;
 	private Image blackTile, whiteTile, boardIm;
+	private Window window;
 
 	public GamePanel(Reversi game, Window window) {
 		try{
+			this.window=window;
 			this.game= game;
 			blackTile= ImageUtils.loadImage("./resources/blacktile.png");
 			whiteTile=ImageUtils.loadImage("./resources/whitetile.png");
 			boardIm=ImageUtils.loadImage("./resources/board.png");
 		}catch(IOException e){
-			JOptionPane.showMessageDialog(window.getContentPane(), "An error has occurred while uploading the images");
+			JOptionPane.showMessageDialog(window, "An error has occurred while uploading the images");
 			System.exit(0);
 		}
 		
@@ -45,12 +47,7 @@ public class GamePanel extends JPanel {
 			public void mouseClicked(MouseEvent m) {
 				int row=m.getY()/TILE_SIZE;
 				int col=m.getX()/TILE_SIZE;
-				if(GamePanel.this.game.PlayerTurn(row, col)){
-					GamePanel.this.paintImmediately(new Rectangle(new Dimension(Board.SIZE*TILE_SIZE,Board.SIZE*TILE_SIZE)));
-					GamePanel.this.game.computerTurn();
-					GamePanel.this.paintImmediately(new Rectangle(new Dimension(Board.SIZE*TILE_SIZE,Board.SIZE*TILE_SIZE)));
-					GamePanel.this.repaint();
-				}
+				GamePanel.this.window.play(row,col);
 			}
 		});
 	}
