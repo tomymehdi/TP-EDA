@@ -65,11 +65,7 @@ public class ArgumentParsing {
 				timed=true;
 			}
 			i++;
-			try{
-				level=Integer.valueOf(args[i]);
-			}catch(NumberFormatException e){
-				throw new ParsingException();
-			}
+			level=Integer.valueOf(args[i]);
 			return i+1;
 		}else{
 			throw new ParsingException();

@@ -1,5 +1,6 @@
-package gui;
+package game;
 
+import gui.Window;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
