@@ -1,13 +1,11 @@
 package gui;
 
-import game.Board;
 import game.GameListener;
 import game.Menu;
 import game.Reversi;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -16,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 public class Window extends JFrame {
 	
@@ -28,6 +27,7 @@ public class Window extends JFrame {
 	private JButton passButton;
 	private Menu menu;
 	private JLabel status;
+	private JPanel container;
 
 	public Window(int level, boolean pruned, boolean timed){
 		GameListener listener=new GameListener(){
@@ -68,12 +68,13 @@ public class Window extends JFrame {
 		//Swing
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setLayout(new BorderLayout());
+		container=new JPanel();
+		container.setLayout(new BorderLayout());
 		
 		menu = new Menu(this);
-		add(menu, BorderLayout.NORTH);
+		container.add(menu, BorderLayout.NORTH);
 		gPanel = new GamePanel(game, this);
-		add(gPanel, BorderLayout.CENTER);
+		container.add(gPanel, BorderLayout.CENTER);
 		
 		status=new JLabel("Your turn!");
 		
@@ -86,9 +87,10 @@ public class Window extends JFrame {
 				repaint();
 			}
 		});
-		add(passButton, BorderLayout.EAST);
-		add(status,BorderLayout.SOUTH);
+		container.add(passButton, BorderLayout.EAST);
+		container.add(status,BorderLayout.SOUTH);
 		passButton.setEnabled(false);
+		add(container);
 		pack();
 		setVisible(true);
 	}
@@ -96,14 +98,10 @@ public class Window extends JFrame {
 	public void play(int row, int col){
 		if(game.PlayerTurn(row, col)){
 			status.setText("The computer is thinking...");
-			status.paintImmediately(getBounds());
-			gPanel.paintImmediately(getBounds());
-			//repaint();
+			container.paintImmediately(container.getBounds());
 			game.computerTurn();
 			status.setText("Your turn");
-			status.paintImmediately(getBounds());
-			gPanel.paintImmediately(getBounds());
-			//repaint();
+			container.paintImmediately(container.getBounds());
 		}
 	}
 	
