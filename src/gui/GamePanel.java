@@ -12,12 +12,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
 public class GamePanel extends JPanel {
-
+	
 	/**
 	 * 
 	 */
@@ -28,12 +29,13 @@ public class GamePanel extends JPanel {
 
 	public GamePanel(Reversi game, Window window) {
 		try{
+			this.window=window;
 			this.game= game;
 			blackTile= ImageUtils.loadImage("./resources/blacktile.png");
 			whiteTile=ImageUtils.loadImage("./resources/whitetile.png");
 			boardIm=ImageUtils.loadImage("./resources/board.png");
 		}catch(IOException e){
-			JOptionPane.showMessageDialog(window.getContentPane(), "An error has occurred while uploading the images");
+			JOptionPane.showMessageDialog(window, "An error has occurred while uploading the images");
 			System.exit(0);
 		}
 		
@@ -44,18 +46,14 @@ public class GamePanel extends JPanel {
 			public void mouseClicked(MouseEvent m) {
 				int row=m.getY()/TILE_SIZE;
 				int col=m.getX()/TILE_SIZE;
-				if(GamePanel.this.game.PlayerTurn(row, col)){
-					repaint();
-					GamePanel.this.game.computerTurn();
-					repaint();
-				}
+				GamePanel.this.window.play(row,col);
 			}
 		});
 	}
 
 	@Override
-	public void paint(Graphics g) {
-		super.paint(g);
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		drawGrid(g);
 		drawTiles(g);
 	}

@@ -21,19 +21,8 @@ public class Reversi {
 	}
 	
 	private void endOfGame() {
-		int playerCount=0;
-		int computerCount=0;
-		Tile[][] field=board.getField();
-		for(int row=0; row<Board.SIZE; row++){
-			for(int col=0; col<Board.SIZE; col++){
-				if(field[row][col]==Tile.PLAYER1){
-					playerCount++;
-				}
-				else if(field[row][col]==Tile.PLAYER2){
-					computerCount++;
-				}
-			}
-		}
+		int playerCount=board.countTiles(Tile.PLAYER1);
+		int computerCount=board.countTiles(Tile.PLAYER2);
 		listener.endOfGame(playerCount-computerCount);
 	}
 	

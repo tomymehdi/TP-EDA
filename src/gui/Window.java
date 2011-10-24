@@ -1,7 +1,6 @@
 package gui;
 
 import game.GameListener;
-import game.Menu;
 import game.Reversi;
 
 import java.awt.BorderLayout;
@@ -12,7 +11,9 @@ import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 public class Window extends JFrame {
 	
@@ -24,6 +25,8 @@ public class Window extends JFrame {
 	private Reversi game;
 	private JButton passButton;
 	private Menu menu;
+	private JLabel status;
+	private JPanel container;
 
 	public Window(int level, boolean pruned, boolean timed){
 		GameListener listener=new GameListener(){
@@ -62,14 +65,17 @@ public class Window extends JFrame {
 		
 		
 		//Swing
+		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setLayout(new BorderLayout());
+		container=new JPanel();
+		container.setLayout(new BorderLayout());
 		
-
 		menu = new Menu(this);
-		add(menu, BorderLayout.NORTH);
+		container.add(menu, BorderLayout.NORTH);
 		gPanel = new GamePanel(game, this);
-		add(gPanel, BorderLayout.CENTER);
+		container.add(gPanel, BorderLayout.CENTER);
+		
+		status=new JLabel("Your turn!");
 		
 		passButton=new JButton("pass");
 		passButton.addActionListener(new ActionListener() {
@@ -80,14 +86,25 @@ public class Window extends JFrame {
 				repaint();
 			}
 		});
-		add(passButton, BorderLayout.EAST);
+		container.add(passButton, BorderLayout.EAST);
+		container.add(status,BorderLayout.SOUTH);
 		passButton.setEnabled(false);
+		add(container);
 		pack();
 		setVisible(true);
+	}
+	
+	public void play(int row, int col){
+		if(game.PlayerTurn(row, col)){
+			status.setText("The computer is thinking...");
+			container.paintImmediately(container.getBounds());
+			game.computerTurn();
+			status.setText("Your turn");
+			container.paintImmediately(container.getBounds());
+		}
 	}
 	
 	public Reversi getGame() {
 		return game;
 	}
-
 }
