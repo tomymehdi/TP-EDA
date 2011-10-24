@@ -25,10 +25,8 @@ public class GamePanel extends JPanel {
 	private Reversi game;
 	private static final int TILE_SIZE = 30;
 	private Image blackTile, whiteTile, boardIm;
-	private Window window;
 
 	public GamePanel(Reversi game, Window window) {
-		this.window=window;
 		try{
 			this.game= game;
 			blackTile= ImageUtils.loadImage("./resources/blacktile.png");
